@@ -113,7 +113,7 @@ StyleAPI {
         let _dx = Math.round(_ux/2);
         let _y = halfHeight-_y_dy
 
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, width+32, height+32);
 
         if(lineRotateFlag || centerRotateFlag) {
             context.transform(1, centerRotateFlag*centerRotateAngle * degUnit, -lineRotateFlag*lineRotateAngle * degUnit, 1, lineRotateFlag*Math.sin(1.05*lineRotateAngle*degUnit)*_y, 0);

@@ -39,7 +39,7 @@ StyleAPI {
             }
         }
 
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, width+32, height+32);
 
         context.beginPath();
         context.moveTo(0, halfHeight);

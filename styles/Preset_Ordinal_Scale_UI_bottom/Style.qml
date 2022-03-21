@@ -92,7 +92,7 @@ StyleAPI {
 
         this_phase = (this_phase+this_speed)%(Math.PI*64);
 
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, width+32, height+32);
 
         drawLine(this_delta*trebleAmRatio*trebleAm, trebleColor, 1.5, this_phase, false);
         drawLine(this_delta*bassAmRatio*bassAm, bassColor, 1.5, this_phase+0.8, false);
