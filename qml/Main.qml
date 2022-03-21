@@ -49,7 +49,7 @@ T.Widget {
 
     menu: Menu {
         Action {
-            text: qsTr("Settings")
+            text: qsTr("Settings") + "..."
             onTriggered: styleDialog.active = true
         }
     }

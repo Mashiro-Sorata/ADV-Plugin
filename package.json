@@ -10,10 +10,10 @@
     },
 
     "description":  {
-        "en": "Audio visualization plugin for SAO Utils",
-        "zh": "用于SAO Utils 的音頻可視化插件",
-        "zh_CN": "用于SAO Utils的音频可视化插件",
-        "ja_JP": "SAO Utils用の音声視覚化プラグイン"
+        "en": "Audio visualization plugin for SAO Utils 2",
+        "zh": "用于SAO Utils 2的音頻可視化插件",
+        "zh_CN": "用于SAO Utils 2的音频可视化插件",
+        "ja_JP": "SAO Utils 2用の音声視覚化プラグイン"
     },
 
     "homepage": "https://nvg.dev/Mashiro_Sorata/ADV-Plugin",
