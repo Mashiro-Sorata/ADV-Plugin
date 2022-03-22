@@ -59,7 +59,7 @@ changeSpeed = 25
 
 # 频谱样式开发
 
-如果想开发新的频谱样式，可以参照[ADV-Plugin Wiki](https://github.com/Mashiro-Sorata/ADV-Plugin/wiki)的说明及开发教程。
+如果想开发新的频谱样式，可以参照[ADV-Plugin Wiki](https://nvg.dev/Mashiro_Sorata/ADV-Plugin/wiki)的说明及开发教程。
 
 欢迎开发更多有趣好玩的频谱样式，与大家分享~
 
