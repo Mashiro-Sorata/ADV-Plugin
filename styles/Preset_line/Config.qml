@@ -83,8 +83,8 @@ CfgAPI {
             name: "Center Angle"
             label: qsTr("Angle of Center Line")
             enabled: _cfg_preset_line_Rotate_Center_Enable.value
-            from: -30
-            to: 30
+            from: -45
+            to: 45
             stepSize: 1
             defaultValue: 10
             displayValue: value + "°"
@@ -103,8 +103,8 @@ CfgAPI {
             name: "Line Angle"
             label: qsTr("Angle of Spectrum Line")
             enabled: _cfg_preset_line_Rotate_Line_Enable.value
-            from: -30
-            to: 30
+            from: -75
+            to: 75
             stepSize: 1
             defaultValue: 10
             displayValue: value + "°"

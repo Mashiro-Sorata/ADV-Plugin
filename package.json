@@ -4,15 +4,15 @@
     
     "title": {
         "en": "ADV Plugin",
-        "zh": "音頻可視化插件",
-        "zh_CN": "音频可视化插件",
+        "zh": "音频可视化插件",
+        "zh_TW": "音頻可視化插件",
         "ja_JP": "音声視覚化プラグイン"
     },
 
     "description":  {
         "en": "Audio visualization plugin for SAO Utils 2",
-        "zh": "用于SAO Utils 2的音頻可視化插件",
-        "zh_CN": "用于SAO Utils 2的音频可视化插件",
+        "zh": "用于SAO Utils 2的音频可视化插件",
+        "zh_TW": "用于SAO Utils 2的音頻可視化插件",
         "ja_JP": "SAO Utils 2用の音声視覚化プラグイン"
     },
 
@@ -43,8 +43,8 @@
             "catalog": "widget",
             "title": {
                 "en": "ADV Widget",
-                "zh": "音頻可視化挂件",
-                "zh_CN": "音频可视化挂件",
+                "zh": "音频可视化挂件",
+                "zh_TW": "音頻可視化挂件",
                 "ja_JP": "音声視覚化プラグイン"
             },
             "preview": "preview.png",
@@ -53,31 +53,56 @@
         {
             "location": "/advp-style-preset_line",
             "catalog": "top.mashiros.advp-style",
-            "title": "Preset Line",
+            "title": {
+                "en": "Preset Line",
+                "zh": "预置 Line",
+                "zh_TW": "預置 Line",
+                "ja_JP": "プリセット Line"
+            },
             "entry": "./styles/Preset_line"
         },
         {
             "location": "/advp-style-preset_waves",
             "catalog": "top.mashiros.advp-style",
-            "title": "Preset Waves",
+            "title": {
+                "en": "Preset Waves",
+                "zh": "预置 Waves",
+                "zh_TW": "預置 Waves",
+                "ja_JP": "プリセット Waves"
+            },
             "entry": "./styles/Preset_waves"
         },
         {
             "location": "/advp-style-preset-circle",
             "catalog": "top.mashiros.advp-style",
-            "title": "Preset Circle",
+            "title": {
+                "en": "Preset Circle",
+                "zh": "预置 Circle",
+                "zh_TW": "預置 Circle",
+                "ja_JP": "プリセット Circle"
+            },
             "entry": "./styles/Preset_circle"
         },
         {
             "location": "/advp-style-preset-solidcircle",
             "catalog": "top.mashiros.advp-style",
-            "title": "Preset Solid-circle",
+            "title": {
+                "en": "Preset Solid-circle",
+                "zh": "预置 Solid-circle",
+                "zh_TW": "預置 Solid-circle",
+                "ja_JP": "プリセット Solid-circle"
+            },
             "entry": "./styles/Preset_solidcircle"
         },
         {
             "location": "/advp-style-preset-ordinal_scale_ui_bottom",
             "catalog": "top.mashiros.advp-style",
-            "title": "Preset Ordinal Scale UI bottom",
+            "title": {
+                "en": "Preset Ordinal Scale UI bottom",
+                "zh": "预置 序列之争底部UI",
+                "zh_TW": "預置 序列之爭底部UI",
+                "ja_JP": "プリセット オーディナル・スケール- UI 下部"
+            },
             "entry": "./styles/Preset_Ordinal_Scale_UI_bottom"
         }, 
         {
@@ -85,8 +110,8 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Line",
-                "zh": "ADV預置 Line",
-                "zh_CN": "ADV预置 Line",
+                "zh": "ADV预置 Line",
+                "zh_TW": "ADV預置 Line",
                 "ja_JP": "ADVプリセット Line"
             },
            "preview": "Presets/Line/preview.png",
@@ -97,8 +122,8 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Waves",
-                "zh": "ADV預置 Waves",
-                "zh_CN": "ADV预置 Waves",
+                "zh": "ADV预置 Waves",
+                "zh_TW": "ADV預置 Waves",
                 "ja_JP": "ADVプリセット Waves"
             },
            "preview": "Presets/Waves/preview.png",
@@ -109,8 +134,8 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Circle",
-                "zh": "ADV預置 Circle",
-                "zh_CN": "ADV预置 Circle",
+                "zh": "ADV预置 Circle",
+                "zh_TW": "ADV預置 Circle",
                 "ja_JP": "ADVプリセット Circle"
             },
            "preview": "Presets/Circle/preview.png",
@@ -121,8 +146,8 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Solid-circle",
-                "zh": "ADV預置 Solid-circle",
-                "zh_CN": "ADV预置 Solid-circle",
+                "zh": "ADV预置 Solid-circle",
+                "zh_TW": "ADV預置 Solid-circle",
                 "ja_JP": "ADVプリセット Solid-circle"
             },
            "preview": "Presets/Solidcircle/preview.png",
@@ -133,8 +158,8 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Ordinal Scale UI bottom",
-                "zh": "ADV預置 序列之爭底部UI",
-                "zh_CN": "ADV预置 序列之争底部UI",
+                "zh": "ADV预置 序列之争底部UI",
+                "zh_TW": "ADV預置 序列之爭底部UI",
                 "ja_JP": "ADVプリセット オーディナル・スケール- UI 下部"
             },
            "preview": "Presets/Ordinal_Scale_UI_bottom/preview.png",

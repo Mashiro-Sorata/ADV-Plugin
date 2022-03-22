@@ -14,8 +14,6 @@ NVG.Window {
     visible: false
     minimumWidth: 480
     minimumHeight: 580
-    maximumWidth: minimumWidth
-    maximumHeight: minimumHeight
     width: minimumWidth
     height: minimumHeight
 
@@ -36,7 +34,7 @@ NVG.Window {
         anchors.topMargin: 0
 
         Row {
-            spacing: 350
+            spacing: window.width - 120
 
             ToolButton {
                 text: qsTr("Save")
