@@ -56,5 +56,11 @@ T.Widget {
 
     Component.onCompleted: {
         styleDialog.active = true;
+        Common.widgetsNum++;
+    }
+
+    Component.onDestruction: {
+        styleDialog.active = false;
+        Common.widgetsNum--;
     }
 }

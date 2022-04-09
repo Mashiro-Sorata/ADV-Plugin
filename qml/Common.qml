@@ -11,6 +11,8 @@ Item {
     readonly property var stylesURL: []
     readonly property var stylesCFG: []
 
+    property int widgetsNum: 0
+
     signal audioDataUpdated(var audioData)
     signal wsocketClosed()
 
@@ -73,7 +75,7 @@ Item {
                 }
                 wsPort = cfg["server"]["port"];
             }}
-        active: false
+        active: widgetsNum>0
     }
 
     function setWsocket(status) {
@@ -117,8 +119,6 @@ Item {
                 stylesCFG.push(styleCFG);
 
             }
-//            console.log(JSON.stringify(Object.keys(resource), null, 2));
-//            console.log(JSON.stringify(resource.files(), null, 2));
         });
     }
 
@@ -127,7 +127,5 @@ Item {
         parse_resource(preset_list, true);
         const third_list = NVG.Resources.filter(/.*/, /top.mashiros.advp-style/);
         parse_resource(third_list, false);
-//        console.log(JSON.stringify(styles, null, 2));
-//        console.log(JSON.stringify(stylesURL, null, 2));
     }
 }

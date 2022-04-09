@@ -7,7 +7,7 @@ NVG.Module {
     initialize: function () {
         console.log("Initializing ADV-Plugin.");
         Common.execute("../bin/ADVServer.exe", "-reboot");
-        Common.setWsocket(true);
+//        Common.setWsocket(true);
         return true;
     }
 

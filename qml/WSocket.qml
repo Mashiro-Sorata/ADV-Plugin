@@ -18,8 +18,6 @@ WebSocket {
 
     onBinaryMessageReceived: {
         let arrayBuffer = new Float32Array(message);
-//        Common.audioData = arrayBuffer.slice();
         Common.audioDataUpdated(arrayBuffer.slice());
-//        arrayBuffer = null;
     }
 }

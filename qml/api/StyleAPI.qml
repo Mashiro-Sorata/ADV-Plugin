@@ -3,9 +3,9 @@ import QtQuick 2.12
 import ".."      //显式导入单例Common.qml
 
 Canvas {
-    width: widget.width;
-    height: widget.height;
-    contextType: "2d";
+    width: widget.width
+    height: widget.height
+    contextType: "2d"
     renderTarget: Canvas.FramebufferObject
     renderStrategy: Canvas.Cooperative
 
