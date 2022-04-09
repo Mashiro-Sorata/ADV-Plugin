@@ -50,7 +50,11 @@ T.Widget {
     menu: Menu {
         Action {
             text: qsTr("Settings") + "..."
-            onTriggered: styleDialog.active = true
+            enabled: !styleDialog.active
+            onTriggered: {
+                Common.updateStyleList();
+                styleDialog.active = true
+            }
         }
     }
 

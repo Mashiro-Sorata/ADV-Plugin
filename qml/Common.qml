@@ -122,10 +122,17 @@ Item {
         });
     }
 
-    Component.onCompleted: {
+    function updateStyleList() {
+        styles.length = 0;
+        stylesURL.length = 0;
+        stylesCFG.length = 0;
         const preset_list = NVG.Resources.filter(/advp.widget.mashiros.top/, /top.mashiros.advp-style/);
         parse_resource(preset_list, true);
         const third_list = NVG.Resources.filter(/.*/, /top.mashiros.advp-style/);
         parse_resource(third_list, false);
+    }
+
+    Component.onCompleted: {
+        updateStyleList();
     }
 }
