@@ -6,14 +6,14 @@
         "en": "ADV Plugin",
         "zh": "音频可视化插件",
         "zh_TW": "音頻可視化插件",
-        "ja_JP": "音声視覚化プラグイン"
+        "ja": "音声視覚化プラグイン"
     },
 
     "description":  {
         "en": "Audio visualization plugin for SAO Utils 2",
         "zh": "用于SAO Utils 2的音频可视化插件",
         "zh_TW": "用于SAO Utils 2的音頻可視化插件",
-        "ja_JP": "SAO Utils 2用の音声視覚化プラグイン"
+        "ja": "SAO Utils 2用の音声視覚化プラグイン"
     },
 
     "homepage": "https://nvg.dev/Mashiro_Sorata/ADV-Plugin",
@@ -45,7 +45,7 @@
                 "en": "ADV Widget",
                 "zh": "音频可视化挂件",
                 "zh_TW": "音頻可視化挂件",
-                "ja_JP": "音声視覚化プラグイン"
+                "ja": "音声視覚化プラグイン"
             },
             "preview": "preview.png",
             "entry": "qml/Main.qml"
@@ -57,7 +57,7 @@
                 "en": "Preset Line",
                 "zh": "预置 Line",
                 "zh_TW": "預置 Line",
-                "ja_JP": "プリセット Line"
+                "ja": "プリセット Line"
             },
             "entry": "./styles/Preset_line"
         },
@@ -68,7 +68,7 @@
                 "en": "Preset Waves",
                 "zh": "预置 Waves",
                 "zh_TW": "預置 Waves",
-                "ja_JP": "プリセット Waves"
+                "ja": "プリセット Waves"
             },
             "entry": "./styles/Preset_waves"
         },
@@ -79,7 +79,7 @@
                 "en": "Preset Circle",
                 "zh": "预置 Circle",
                 "zh_TW": "預置 Circle",
-                "ja_JP": "プリセット Circle"
+                "ja": "プリセット Circle"
             },
             "entry": "./styles/Preset_circle"
         },
@@ -90,7 +90,7 @@
                 "en": "Preset Solid-circle",
                 "zh": "预置 Solid-circle",
                 "zh_TW": "預置 Solid-circle",
-                "ja_JP": "プリセット Solid-circle"
+                "ja": "プリセット Solid-circle"
             },
             "entry": "./styles/Preset_solidcircle"
         },
@@ -101,7 +101,7 @@
                 "en": "Preset Ordinal Scale UI bottom",
                 "zh": "预置 序列之争底部UI",
                 "zh_TW": "預置 序列之爭底部UI",
-                "ja_JP": "プリセット オーディナル・スケール- UI 下部"
+                "ja": "プリセット オーディナル・スケール- UI 下部"
             },
             "entry": "./styles/Preset_Ordinal_Scale_UI_bottom"
         }, 
@@ -112,7 +112,7 @@
                 "en": "ADV Preset Line",
                 "zh": "ADV预置 Line",
                 "zh_TW": "ADV預置 Line",
-                "ja_JP": "ADVプリセット Line"
+                "ja": "ADVプリセット Line"
             },
            "preview": "Presets/Line/preview.png",
            "entry": "Presets/Line/preset.json"
@@ -124,7 +124,7 @@
                 "en": "ADV Preset Waves",
                 "zh": "ADV预置 Waves",
                 "zh_TW": "ADV預置 Waves",
-                "ja_JP": "ADVプリセット Waves"
+                "ja": "ADVプリセット Waves"
             },
            "preview": "Presets/Waves/preview.png",
            "entry": "Presets/Waves/preset.json"
@@ -136,7 +136,7 @@
                 "en": "ADV Preset Circle",
                 "zh": "ADV预置 Circle",
                 "zh_TW": "ADV預置 Circle",
-                "ja_JP": "ADVプリセット Circle"
+                "ja": "ADVプリセット Circle"
             },
            "preview": "Presets/Circle/preview.png",
            "entry": "Presets/Circle/preset.json"
@@ -148,7 +148,7 @@
                 "en": "ADV Preset Solid-circle",
                 "zh": "ADV预置 Solid-circle",
                 "zh_TW": "ADV預置 Solid-circle",
-                "ja_JP": "ADVプリセット Solid-circle"
+                "ja": "ADVプリセット Solid-circle"
             },
            "preview": "Presets/Solidcircle/preview.png",
            "entry": "Presets/Solidcircle/preset.json"
@@ -160,7 +160,7 @@
                 "en": "ADV Preset Ordinal Scale UI bottom",
                 "zh": "ADV预置 序列之争底部UI",
                 "zh_TW": "ADV預置 序列之爭底部UI",
-                "ja_JP": "ADVプリセット オーディナル・スケール- UI 下部"
+                "ja": "ADVプリセット オーディナル・スケール- UI 下部"
             },
            "preview": "Presets/Ordinal_Scale_UI_bottom/preview.png",
            "entry": "Presets/Ordinal_Scale_UI_bottom/preset.json"
