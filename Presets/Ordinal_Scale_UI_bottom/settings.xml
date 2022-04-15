@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset_line#Style.qml">{"__version":"1.0.0","__cfg_height":580,"Center Line":true,"Center Color":"#ff4500","Line Color":"#ff4500","Line Position":0,"Data Length":0,"Channel":2,"Reverse":false,"Rotate Settings":{"Center Enable":false,"Center Angle":10,"Line Enable":false,"Line Angle":10},"Data Settings":{"Auto Normalizing":true,"Amplitude":4,"Unit Style":0}}</value>
-    <value name="styles">{"index":4}</value>
-    <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset-ordinal_scale_ui_bottom#Style.qml"</value>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset_waves#Style.qml">{"__version":"1.0.0","__cfg_height":580,"Line Width":1,"Line Color":"#ff4500","Data Settings":{"Auto Normalizing":true,"Amplitude":10}}</value>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset-circle#Style.qml">{"__version":"1.0.0","__cfg_height":740,"Main Color":"#ff4500","Line Position":0,"Line Width":1,"Max Range":50,"Data Length":0,"Channel":2,"Reverse":false,"Rotate":false,"Ratate Speed":10,"Angle":0,"Data Settings":{"Auto Normalizing":true,"Amplitude":10,"Unit Style":0}}</value>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset-solidcircle#Style.qml">{"__version":"1.0.0","__cfg_height":740,"Main Color":"#ff4500","Line Position":0,"Line Width":1,"Max Range":50,"Data Length":0,"Channel":2,"Reverse":false,"Rotate":false,"Ratate Speed":10,"Angle":0,"Data Settings":{"Auto Normalizing":true,"Amplitude":10,"Unit Style":0}}</value>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset-ordinal_scale_ui_bottom#Style.qml">{"__version":"1.0.0","__cfg_height":710,"Bass Color":"#dc143c","Alto Color":"#f8f8ff","Treble Color":"#4169e1","Bass AM":100,"Alto AM":150,"Treble AM":200,"Static AM":15,"Speed":20,"Data Settings":{"Auto Normalizing":true,"Amplitude":10}}</value>
+    <value name="styles">{"index":5}</value>
+    <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset/ordinal_scale_ui_bottom#Style.qml"</value>
+    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/ordinal_scale_ui_bottom#Style.qml">{"__version":"1.0.0","__cfg_height":710,"Bass Color":"#dc143c","Alto Color":"#f8f8ff","Treble Color":"#4169e1","Bass AM":100,"Alto AM":150,"Treble AM":200,"Static AM":25,"Speed":20,"Data Settings":{"Auto Normalizing":true,"Amplitude":10}}</value>
 </map>

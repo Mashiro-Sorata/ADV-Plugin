@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset_line#Style.qml">{"__version":"1.0.0","__cfg_height":580,"Center Line":true,"Center Color":"#ff4500","Line Color":"#ff4500","Line Position":0,"Data Length":0,"Channel":2,"Reverse":false,"Rotate Settings":{"Center Enable":false,"Center Angle":10,"Line Enable":false,"Line Angle":10},"Data Settings":{"Auto Normalizing":true,"Amplitude":4,"Unit Style":0}}</value>
+    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/line#Style.qml">{"__version":"1.0.0","__cfg_height":580,"Center Line":true,"Center Color":"#ff4500","Line Color":"#ff4500","Line Position":0,"Data Length":0,"Channel":2,"Reverse":false,"Rotate Settings":{"Center Enable":false,"Center Angle":10,"Line Enable":false,"Line Angle":10},"Data Settings":{"Auto Normalizing":true,"Amplitude":10,"Unit Style":0}}</value>
     <value name="styles">{"index":0}</value>
-    <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset_line#Style.qml"</value>
+    <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset/line#Style.qml"</value>
 </map>
