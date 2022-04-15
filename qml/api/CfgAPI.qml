@@ -38,4 +38,6 @@ P.DialogPreference {
             font.weight: Font.DemiBold
         }
     }
+
+    P.Separator {}
 }

@@ -94,10 +94,10 @@ Item {
     function parse_resource(resource_list, sort) {
         if (sort)
             resource_list.sort(function (x, y) {
-                let preset_order = ["Preset Line", "Preset Waves", "Preset Circle", "Preset Solid-circle", "Preset Ordinal Scale UI bottom"];
-                if (preset_order.indexOf(x.title) < preset_order.indexOf(y.title))
+                let preset_order = ["/advp-style-preset/line", "/advp-style-preset/gradient_line", "/advp-style-preset/waves", "/advp-style-preset/circle", "/advp-style-preset/solidcircle", "/advp-style-preset/ordinal_scale_ui_bottom"];
+                if (preset_order.indexOf(x.location) < preset_order.indexOf(y.location))
                     return -1;
-                else if(preset_order.indexOf(x.title) > preset_order.indexOf(y.title))
+                else if(preset_order.indexOf(x.location) > preset_order.indexOf(y.location))
                     return 1;
                 else
                     return 0;
@@ -117,7 +117,6 @@ Item {
                 styles.push(name);
                 stylesURL.push(styleURL);
                 stylesCFG.push(styleCFG);
-
             }
         });
     }

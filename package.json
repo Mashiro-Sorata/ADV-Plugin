@@ -1,6 +1,6 @@
 {
     "name": "top.mashiros.widget.advp",
-    "version": "1.0.0",
+    "version": "1.1.0",
     
     "title": {
         "en": "ADV Plugin",
@@ -10,10 +10,10 @@
     },
 
     "description":  {
-        "en": "Audio visualization plugin for SAO Utils 2",
-        "zh": "用于SAO Utils 2的音频可视化插件",
-        "zh_TW": "用于SAO Utils 2的音頻可視化插件",
-        "ja": "SAO Utils 2用の音声視覚化プラグイン"
+        "en": "Audio visualization plugin for SAO Utils 2, includes 6 preset styles and provides API for third-party style extensions.",
+        "zh": "用于SAO Utils 2的音频可视化插件，包含6种预设频谱样式，并为第三方频谱样式扩展提供了接口。",
+        "zh_TW": "用於SAO Utils 2的音頻可視化插件，包含6種預設頻譜樣式，並為第三方頻譜樣式擴展提供了接口。",
+        "ja": "SAO Utils 2のオーディオ視覚化プラグインには、6つのプリセットスペクトルスタイルが含まれており、サードパーティのスペクトルスタイル拡張用のインターフェイスを提供します。"
     },
 
     "homepage": "https://nvg.dev/Mashiro_Sorata/ADV-Plugin",
@@ -51,51 +51,62 @@
             "entry": "qml/Main.qml"
         },
         {
-            "location": "/advp-style-preset_line",
+            "location": "/advp-style-preset/line",
             "catalog": "top.mashiros.advp-style",
             "title": {
                 "en": "Preset Line",
-                "zh": "预置 Line",
-                "zh_TW": "預置 Line",
-                "ja": "プリセット Line"
+                "zh": "预置 线",
+                "zh_TW": "預置 線",
+                "ja": "プリセット 線"
             },
             "entry": "./styles/Preset_line"
         },
         {
-            "location": "/advp-style-preset_waves",
+            "location": "/advp-style-preset/gradient_line",
+            "catalog": "top.mashiros.advp-style",
+            "title": {
+                "en": "Preset Gradient Line",
+                "zh": "预置 渐变线",
+                "zh_TW": "預置 漸變線",
+                "ja": "プリセット グラデーションライン"
+            },
+            "entry": "./styles/Preset_gradient_line"
+        },
+        {
+            "location": "/advp-style-preset/waves",
             "catalog": "top.mashiros.advp-style",
             "title": {
                 "en": "Preset Waves",
-                "zh": "预置 Waves",
-                "zh_TW": "預置 Waves",
-                "ja": "プリセット Waves"
+                "zh": "预置 波浪",
+                "zh_TW": "預置 波浪",
+                "ja": "プリセット 波浪"
             },
             "entry": "./styles/Preset_waves"
         },
         {
-            "location": "/advp-style-preset-circle",
+            "location": "/advp-style-preset/circle",
             "catalog": "top.mashiros.advp-style",
             "title": {
                 "en": "Preset Circle",
-                "zh": "预置 Circle",
-                "zh_TW": "預置 Circle",
-                "ja": "プリセット Circle"
+                "zh": "预置 圆",
+                "zh_TW": "預置 圓",
+                "ja": "プリセット 円"
             },
             "entry": "./styles/Preset_circle"
         },
         {
-            "location": "/advp-style-preset-solidcircle",
+            "location": "/advp-style-preset/solidcircle",
             "catalog": "top.mashiros.advp-style",
             "title": {
                 "en": "Preset Solid-circle",
-                "zh": "预置 Solid-circle",
-                "zh_TW": "預置 Solid-circle",
-                "ja": "プリセット Solid-circle"
+                "zh": "预置 实心圆",
+                "zh_TW": "預置 實心圓",
+                "ja": "プリセット 固形円"
             },
             "entry": "./styles/Preset_solidcircle"
         },
         {
-            "location": "/advp-style-preset-ordinal_scale_ui_bottom",
+            "location": "/advp-style-preset/ordinal_scale_ui_bottom",
             "catalog": "top.mashiros.advp-style",
             "title": {
                 "en": "Preset Ordinal Scale UI bottom",
@@ -110,21 +121,33 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Line",
-                "zh": "ADV预置 Line",
-                "zh_TW": "ADV預置 Line",
-                "ja": "ADVプリセット Line"
+                "zh": "ADV预置 线",
+                "zh_TW": "ADV預置 線",
+                "ja": "ADVプリセット 線"
             },
            "preview": "Presets/Line/preview.png",
            "entry": "Presets/Line/preset.json"
+        },
+        {
+            "location": "/preset/advp-style-preset_gradient_line",
+            "catalog": "preset/widget",
+            "title": {
+                "en": "ADV Preset Gradient Line",
+                "zh": "ADV预置 渐变线",
+                "zh_TW": "ADV預置 漸變線",
+                "ja": "ADVプリセット グラデーションライン"
+            },
+           "preview": "Presets/Gradient_Line/preview.png",
+           "entry": "Presets/Gradient_Line/preset.json"
         },
         {
             "location": "/preset/advp-style-preset_waves",
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Waves",
-                "zh": "ADV预置 Waves",
-                "zh_TW": "ADV預置 Waves",
-                "ja": "ADVプリセット Waves"
+                "zh": "ADV预置 波浪",
+                "zh_TW": "ADV預置 波浪",
+                "ja": "ADVプリセット 波浪"
             },
            "preview": "Presets/Waves/preview.png",
            "entry": "Presets/Waves/preset.json"
@@ -134,9 +157,9 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Circle",
-                "zh": "ADV预置 Circle",
-                "zh_TW": "ADV預置 Circle",
-                "ja": "ADVプリセット Circle"
+                "zh": "ADV预置 圆",
+                "zh_TW": "ADV預置 圓",
+                "ja": "ADVプリセット 円"
             },
            "preview": "Presets/Circle/preview.png",
            "entry": "Presets/Circle/preset.json"
@@ -146,9 +169,9 @@
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Solid-circle",
-                "zh": "ADV预置 Solid-circle",
-                "zh_TW": "ADV預置 Solid-circle",
-                "ja": "ADVプリセット Solid-circle"
+                "zh": "ADV预置 实心圆",
+                "zh_TW": "ADV預置 實心圓",
+                "ja": "ADVプリセット 固形円"
             },
            "preview": "Presets/Solidcircle/preview.png",
            "entry": "Presets/Solidcircle/preset.json"
