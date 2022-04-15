@@ -20,7 +20,7 @@
 
 安装并启用插件后，默认加载第一种预设Style样式。右键挂件可调出菜单，在挂件菜单的挂件名选单中点击Settings选项，呼出Style设置窗口。点击其中的Styles选项可切换不同的Style风格，若此Style提供可配置项，则在Styles选项下方会出现配置界面的入口。
 
-<div align="center"><img src="https://p.qlogo.cn/zc_icon/0/5c7aacc6a0ddcb889bdacabdbf3a466716282394846386/0.png" style="zoom:80%;" /></div>
+<div align="center"><img src="https://s3.bmp.ovh/imgs/2022/04/15/b62270e9dd574622.png" style="zoom:80%;" /></div>
 
 # 进阶设置
 
