@@ -14,108 +14,65 @@ AdvpStyleTemplate {
         readonly property int uDataLen: Math.pow(2, configs["Data Length"]);
         readonly property int dataLength: 64/uDataLen
         readonly property int channel: configs["Channel"]
-        readonly property bool reverse: configs["Reverse"]
         readonly property bool centerRotateFlag: configs["Rotate Settings"]["Center Enable"]
         readonly property real centerRotateAngle: configs["Rotate Settings"]["Center Angle"]
         readonly property bool lineRotateFlag: configs["Rotate Settings"]["Line Enable"]
         readonly property real lineRotateAngle: configs["Rotate Settings"]["Line Angle"]
         readonly property bool autoNormalizing: configs["Data Settings"]["Auto Normalizing"]
-        readonly property real amplitude: configs["Data Settings"]["Amplitude"] / 400.0
+        readonly property real amplitude: 400.0/configs["Data Settings"]["Amplitude"]
         readonly property int unitStyle: configs["Data Settings"]["Unit Style"]
 
-        property int total: channel * dataLength
-        property real logAmplitude: Math.log10(amplitude)
         property real degUnit: Math.PI / 180
 
         property real halfWidth: width/2
         property real halfHeight: height/2
 
+        readonly property int l_start: (channel===1)*dataLength
+        readonly property int r_stop: dataLength+dataLength*(channel!==0)
+        readonly property int total: r_stop-l_start
+        readonly property real _y_dy: centerRotateFlag*Math.tan(centerRotateAngle*degUnit)*halfWidth
+        readonly property real _ux: width/(r_stop-l_start)
+        readonly property real _dx: Math.round(_ux/2)
+
         onAudioDataUpdeted: {
-            if(autoNormalizing) {
-                if (unitStyle) {
-                    //对数化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64-i*uDataLen-j-1]/data[128])) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+            let normalizing_ratio = autoNormalizing ? data[128] : amplitude;
+            if (unitStyle) {
+                //对数化显示
+                for(let i=l_start; i<dataLength; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += Math.max(0, 0.4 * (Math.log10(data[63-i*uDataLen-j]/normalizing_ratio)) + 1.0);
                     }
-                    if (channel === 2) {
-                        for(let i=dataLength; i<total; i++) {
-                            audioData[i] = 0;
-                            for(let j=0; j<uDataLen; j++) {
-                                audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64+(i-dataLength)*uDataLen+j]/data[128])) + 1.0);
-                            }
-                            audioData[i] /= uDataLen;
-                        }
+                    audioData[i] /= uDataLen;
+                }
+                for(let i=dataLength; i<r_stop; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += Math.max(0, 0.4 * (Math.log10(data[i*uDataLen+j]/normalizing_ratio)) + 1.0);
                     }
-                } else {
-                    //线性化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64-i*uDataLen-j-1];
-                        }
-                        audioData[i] /= (uDataLen * data[128]);
-                    }
-                    if (channel === 2) {
-                        for(let i=dataLength; i<total; i++) {
-                            audioData[i] = 0;
-                            for(let j=0; j<uDataLen; j++) {
-                                audioData[i] += data[64+(i-dataLength)*uDataLen+j];
-                            }
-                            audioData[i] /= (uDataLen * data[128]);
-                        }
-                    }
+                    audioData[i] /= uDataLen;
                 }
             } else {
-                if (unitStyle) {
-                    //对数化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64-i*uDataLen-j-1])+logAmplitude) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+                //线性化显示
+                for(let i=l_start; i<dataLength; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += data[63-i*uDataLen-j];
                     }
-                    if (channel === 2) {
-                        for(let i=dataLength; i<total; i++) {
-                            audioData[i] = 0;
-                            for(let j=0; j<uDataLen; j++) {
-                                audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64+(i-dataLength)*uDataLen+j])+logAmplitude) + 1.0);
-                            }
-                            audioData[i] /= uDataLen;
-                        }
+                    audioData[i] /= (uDataLen * normalizing_ratio);
+                }
+                for(let i=dataLength; i<r_stop; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += data[i*uDataLen+j];
                     }
-                } else {
-                    //线性化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64-i*uDataLen-j-1];
-                        }
-                        audioData[i] /= (uDataLen/amplitude);
-                    }
-                    if (channel === 2) {
-                        for(let i=dataLength; i<total; i++) {
-                            audioData[i] = 0;
-                            for(let j=0; j<uDataLen; j++) {
-                                audioData[i] += data[64+(i-dataLength)*uDataLen+j];
-                            }
-                            audioData[i] /= (uDataLen/amplitude);
-                        }
-                    }
+                    audioData[i] /= (uDataLen * normalizing_ratio);
                 }
             }
-            let _dy;
-            let _y_dy = centerRotateFlag*Math.tan(centerRotateAngle*degUnit)*halfWidth;
-            let _ux = width/total;
-            let _dx = Math.round(_ux/2);
-            let _y = halfHeight-_y_dy
 
             context.clearRect(0, 0, width+32, height+32);
 
+            let _y = halfHeight-_y_dy;
             if(lineRotateFlag || centerRotateFlag) {
                 context.transform(1, centerRotateFlag*centerRotateAngle * degUnit, -lineRotateFlag*lineRotateAngle * degUnit, 1, lineRotateFlag*Math.sin(1.05*lineRotateAngle*degUnit)*_y, 0);
             }
@@ -125,34 +82,19 @@ AdvpStyleTemplate {
                 context.fillRect(0, _y, width, 2);
             }
 
-
-
             context.fillStyle = line_color;
-
             //绘制频谱
-            if (channel === 1 && reverse) {
-                for (let i = 0; i < dataLength; i++) {
-                    let index = dataLength - i - 1;
-                    _y = halfHeight*(1-(linePosition!==2)*audioData[index])-_y_dy;
-                    _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[index];
-                    context.fillRect(_ux * i, _y, _dx, _dy);
-                }
-            } else {
-                for (let j = 0; j < channel; j++) {
-                    for (let i = 0; i < dataLength; i++) {
-                        let index = j ? ((total - dataLength) + i) : i;
-                        _y = halfHeight*(1-(linePosition!==2)*audioData[index])-_y_dy;
-                        _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[index];
-                        context.fillRect(_ux * (i + j * dataLength), _y, _dx, _dy);
-                    }
-                }
+            let _dy;
+            for (let i=l_start; i<r_stop; i++) {
+                _y = halfHeight*(1-(linePosition!==2)*audioData[i])-_y_dy;
+                _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[i];
+                context.fillRect(_ux * (i-l_start), _y, _dx, _dy);
             }
 
             if (centerRotateFlag || lineRotateFlag)
                 context.resetTransform();
 
             context.fill();
-
             requestPaint();
         }
 
@@ -164,14 +106,13 @@ AdvpStyleTemplate {
     }
 
     defaultValues: {
-        "Version": "1.0.0",
+        "Version": "1.1.0",
         "Center Line": true,
         "Center Color": "#ff4500",
         "Line Color": "#ff4500",
         "Line Position": 0,
         "Data Length": 0,
         "Channel": 2,
-        "Reverse": false,
         "Rotate Settings": {
             "Center Enable": false,
             "Center Angle": 10,
@@ -225,25 +166,11 @@ AdvpStyleTemplate {
             model: [64, 32, 16, 8]
         }
 
-        P.Separator {}
-
-        P.SpinPreference {
-            id: _cfg_preset_line_Channel
+        P.SelectPreference {
             name: "Channel"
             label: qsTr("Channel")
-            message: "1 to 2"
-            display: P.TextFieldPreference.ExpandLabel
-            editable: false
-            from: 1
-            to: 2
             defaultValue: defaultValues["Channel"]
-        }
-
-        P.SwitchPreference {
-            name: "Reverse"
-            label: qsTr("Reverse Spectrum")
-            enabled: _cfg_preset_line_Channel.value === 1
-            defaultValue: defaultValues["Reverse"]
+            model: [qsTr("Left Channel"), qsTr("Right Channel"), qsTr("Stereo")]
         }
 
         P.Separator {}

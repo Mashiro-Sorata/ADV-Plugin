@@ -8,7 +8,7 @@ AdvpStyleTemplate {
         readonly property var audioData: new Array(128)
 
         readonly property bool autoNormalizing: configs["Data Settings"]["Auto Normalizing"]
-        readonly property real amplitude: configs["Data Settings"]["Amplitude"] / 400.0
+        readonly property real amplitude: 400/configs["Data Settings"]["Amplitude"]
 
         readonly property int uDataLen: Math.pow(2, configs["Data Length"]);
         readonly property int dataLength: 64/uDataLen
@@ -26,74 +26,38 @@ AdvpStyleTemplate {
         }
 
         onAudioDataUpdeted: {
-            data[128] *= 2;
-            if(autoNormalizing) {
-                if (unitStyle) {
-                    //对数化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64-i*uDataLen-j-1]/data[128])) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+            let normalizing_ratio = autoNormalizing ? data[128]*2 : amplitude;
+            if (unitStyle) {
+                //对数化显示
+                for(let i=0; i<dataLength; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += Math.max(0, 0.4 * (Math.log10(data[63-i*uDataLen-j]/normalizing_ratio)) + 1.0);
                     }
-                    for(let i=dataLength; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64+(i-dataLength)*uDataLen+j]/data[128])) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+                    audioData[i] /= uDataLen;
+                }
+                for(let i=dataLength; i<total; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += Math.max(0, 0.4 * (Math.log10(data[i*uDataLen+j]/normalizing_ratio)) + 1.0);
                     }
-                } else {
-                    //线性化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64-i*uDataLen-j-1];
-                        }
-                        audioData[i] /= (uDataLen * data[128]);
-                    }
-                    for(let i=dataLength; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64+(i-dataLength)*uDataLen+j];
-                        }
-                        audioData[i] /= (uDataLen * data[128]);
-                    }
+                    audioData[i] /= uDataLen;
                 }
             } else {
-                if (unitStyle) {
-                    //对数化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64-i*uDataLen-j-1])+logAmplitude) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+                //线性化显示
+                for(let i=0; i<dataLength; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += data[63-i*uDataLen-j];
                     }
-                    for(let i=dataLength; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64+(i-dataLength)*uDataLen+j])+logAmplitude) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+                    audioData[i] /= (uDataLen * normalizing_ratio);
+                }
+                for(let i=dataLength; i<total; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += data[i*uDataLen+j];
                     }
-                } else {
-                    //线性化显示
-                    for(let i=0; i<dataLength; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64-i*uDataLen-j-1];
-                        }
-                        audioData[i] /= (uDataLen/amplitude);
-                    }
-                    for(let i=dataLength; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64+(i-dataLength)*uDataLen+j];
-                        }
-                        audioData[i] /= (uDataLen/amplitude);
-                    }
+                    audioData[i] /= (uDataLen * normalizing_ratio);
                 }
             }
 
@@ -134,7 +98,7 @@ AdvpStyleTemplate {
 
     preference: AdvpPreference {
         version: defaultValues["Version"]
-        cfg_height: 400
+        cfg_height: 500
 
         P.SliderPreference {
             name: "Line Width"

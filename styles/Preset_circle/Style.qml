@@ -18,7 +18,7 @@ AdvpStyleTemplate {
         readonly property real rSpeed: configs["Ratate Speed"] / 100
         readonly property real angle: configs["Angle"]
         readonly property bool autoNormalizing: configs["Data Settings"]["Auto Normalizing"]
-        readonly property real amplitude: configs["Data Settings"]["Amplitude"] / 400
+        readonly property real amplitude: 400/configs["Data Settings"]["Amplitude"]
         readonly property int unitStyle: configs["Data Settings"]["Unit Style"]
 
         readonly property int total: channel*dataLength
@@ -37,7 +37,6 @@ AdvpStyleTemplate {
         readonly property real halfWidth: width/2
         readonly property real halfHeight: height/2
         readonly property real halfMinLength: minLength/2
-        readonly property real logAmplitude: Math.log10(amplitude)
 
 
         onConfigsUpdated: {
@@ -45,13 +44,9 @@ AdvpStyleTemplate {
             context.strokeStyle = configs["Main Color"];
         }
 
-        function getPos(r, deg) {
-            return [halfWidth+Math.cos(deg)*r,halfHeight+Math.sin(deg)*r];
-        }
-
         function createPoint() {
-            outerPos = [];
-            innerPos = [];
+            outerPos.length = 0;
+            innerPos.length = 0;
             let deg, deltaR, r1, r2, _rhmLen;
             _rhmLen = mainRatio*halfMinLength;
 
@@ -61,56 +56,35 @@ AdvpStyleTemplate {
                     deltaR = audioData[reverse*(dataLength-i-1)+(!reverse)*(i+j*dataLength)] * ratio;
                     r1 = _rhmLen+1+deltaR*(linePosition!==2);
                     r2 = _rhmLen-1-deltaR*(linePosition!==1);
-                    outerPos.push(getPos(r1, deg));
-                    innerPos.push(getPos(r2, deg));
+                    outerPos.push([halfWidth+Math.cos(deg)*r1,halfHeight+Math.sin(deg)*r1]);
+                    innerPos.push([halfWidth+Math.cos(deg)*r2,halfHeight+Math.sin(deg)*r2]);
                 }
             }
             offsetAngle = rotateFlag ? ((offsetAngle + rSpeed) % 360) : angle;
         }
 
         onAudioDataUpdeted: {
-            if(autoNormalizing) {
-                if (unitStyle) {
-                    //对数化显示
-                    let logPeak = Math.log10(data[128]);
-                    for(let i=0; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.4 * (Math.log10(data[i*uDataLen+j])-logPeak) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+            let normalizing_ratio = autoNormalizing ? data[128] : amplitude;
+            if (unitStyle) {
+                //对数化显示
+                for(let i=0; i<total; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += Math.max(0, 0.4 * (Math.log10(data[i*uDataLen+j]/normalizing_ratio)) + 1.0);
                     }
-                } else {
-                    //线性化显示
-                    for(let i=0; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[i*uDataLen+j] / data[128];
-                        }
-                        audioData[i] /= uDataLen;
-                    }
+                    audioData[i] /= uDataLen;
                 }
             } else {
-                if (unitStyle) {
-                    //对数化显示
-                    for(let i=0; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.35 * (Math.log10(data[i*uDataLen+j])+logAmplitude) + 1.0);
-                        }
-                        audioData[i] /= uDataLen;
+                //线性化显示
+                for(let i=0; i<total; i++) {
+                    audioData[i] = 0;
+                    for(let j=0; j<uDataLen; j++) {
+                        audioData[i] += data[i*uDataLen+j];
                     }
-                } else {
-                    //线性化显示
-                    for(let i=0; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[i*uDataLen+j] * amplitude;
-                        }
-                        audioData[i] /= uDataLen;
-                    }
+                    audioData[i] /= (uDataLen * normalizing_ratio);
                 }
             }
+
             context.clearRect(0, 0, width+32, height+32);
             createPoint();
 
@@ -131,7 +105,7 @@ AdvpStyleTemplate {
     }
 
     defaultValues: {
-        "Version": "1.0.0",
+        "Version": "1.1.0",
         "Main Color": "#ff4500",
         "Line Position": 0,
         "Line Width": 1,

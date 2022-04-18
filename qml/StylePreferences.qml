@@ -77,8 +77,8 @@ NVG.Window {
                         onPreferenceEdited: {
                             if (widget.settings.current_style !== Common.stylesURL[styleList.value]) {
                                 widget.settings[widget.settings.current_style] = old_style_cfg;
-                                old_style_cfg = widget.settings[Common.stylesURL[styleList.value]];
                                 widget.settings.current_style = Common.stylesURL[styleList.value];
+                                old_style_cfg = widget.settings[widget.settings.current_style];
                             }
                             let cfg = rootPreference.save();
                             widget.settings[widget.settings.current_style] = cfg[widget.settings.current_style];
