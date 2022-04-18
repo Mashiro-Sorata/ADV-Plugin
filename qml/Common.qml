@@ -9,7 +9,6 @@ import NERvGear 1.0 as NVG
 Item {
     readonly property var styles: []
     readonly property var stylesURL: []
-    readonly property var stylesCFG: []
 
     property int widgetsNum: 0
 
@@ -103,20 +102,9 @@ Item {
                     return 0;
             });
         resource_list.forEach(function (resource) {
-            let name = resource.title;
-            let styleURL = "";
-            let styleCFG = "";
-            resource.files().forEach(function (file) {
-                if (file.entry === "Style.qml") {
-                    styleURL = String(file.url);
-                } else if (file.entry === "Config.qml") {
-                    styleCFG = String(file.url);
-                }
-            });
-            if (styleURL && stylesURL.indexOf(styleURL) === -1) {
-                styles.push(name);
-                stylesURL.push(styleURL);
-                stylesCFG.push(styleCFG);
+            if (resource.url && stylesURL.indexOf(resource.url.toString()) === -1) {
+                styles.push(resource.title);
+                stylesURL.push(resource.url.toString());
             }
         });
     }
@@ -124,7 +112,6 @@ Item {
     function updateStyleList() {
         styles.length = 0;
         stylesURL.length = 0;
-        stylesCFG.length = 0;
         const preset_list = NVG.Resources.filter(/advp.widget.mashiros.top/, /top.mashiros.advp-style/);
         parse_resource(preset_list, true);
         const third_list = NVG.Resources.filter(/.*/, /top.mashiros.advp-style/);

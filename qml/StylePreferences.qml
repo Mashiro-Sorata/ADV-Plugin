@@ -12,7 +12,7 @@ import "."
 NVG.Window {
     id: window
     title: qsTr("ADV-Plugin: Settings")
-    visible: false
+    visible: true
     minimumWidth: 480
     minimumHeight: 580
     width: minimumWidth
@@ -25,8 +25,8 @@ NVG.Window {
         }
     }
 
-    property var configuration
     property var old_style_cfg
+    property int last_style_index
 
     Page {
         id: cfg_page
@@ -38,22 +38,15 @@ NVG.Window {
             standardButtons: Dialog.Save | Dialog.Reset
 
             onAccepted: {
-                configuration = rootPreference.save();
-                let index = configuration["index"];
-                widget.settings[Common.stylesURL[index]] = configuration[Common.stylesURL[index]];
-                delete configuration[Common.stylesURL[index]];
-                widget.settings.styles = configuration;
-                widget.settings.current_style = Common.stylesURL[index];
+                let cfg = rootPreference.save();
+                widget.settings[widget.settings.current_style] = cfg[widget.settings.current_style];
                 styleDialog.active = false;
             }
 
             onReset: {
-                styleLoader.load();
+                stylePreferenceLoader.load();
                 let cfg = rootPreference.save();
-                let index = cfg["index"];
-                widget.settings[Common.stylesURL[index]] = cfg[Common.stylesURL[index]];
-                widget.setStyleURL("");
-                widget.setStyleURL(Qt.resolvedUrl(Common.stylesURL[widget.settings.styles["index"]]));
+                widget.settings[widget.settings.current_style] = cfg[widget.settings.current_style];
             }
         }
 
@@ -82,18 +75,13 @@ NVG.Window {
                         label: qsTr("Configuration")
 
                         onPreferenceEdited: {
-                            let cfg = rootPreference.save();
-                            let index = cfg["index"];
-                            if (widget.settings.styles["index"] !== index) {
-                                widget.setStyleURL("");
-                                widget.settings[Common.stylesURL[widget.settings.styles["index"]]] = old_style_cfg;
-                                old_style_cfg = widget.settings[Common.stylesURL[index]];
+                            if (widget.settings.current_style !== Common.stylesURL[styleList.value]) {
+                                widget.settings[widget.settings.current_style] = old_style_cfg;
+                                old_style_cfg = widget.settings[Common.stylesURL[styleList.value]];
+                                widget.settings.current_style = Common.stylesURL[styleList.value];
                             }
-
-                            widget.settings[Common.stylesURL[index]] = cfg[Common.stylesURL[index]];
-                            delete cfg[Common.stylesURL[index]];
-                            widget.settings.styles = cfg;
-                            widget.setStyleURL(Qt.resolvedUrl(Common.stylesURL[index]));
+                            let cfg = rootPreference.save();
+                            widget.settings[widget.settings.current_style] = cfg[widget.settings.current_style];
                         }
 
                         P.SelectPreference {
@@ -108,24 +96,21 @@ NVG.Window {
                         P.Separator {}
 
                         P.PreferenceLoader {
-                            id: styleLoader
-                            name: Common.stylesURL[styleList.value]
-                            source: Qt.resolvedUrl(Common.stylesCFG[styleList.value])
+                            id: stylePreferenceLoader
+                            name: widget.settings.current_style
+                            sourceComponent: preference
                             onLoaded: {
                                 let cfg = save();
-                                if (!widget.settings[Common.stylesURL[styleList.value]]) {
-                                    widget.settings[Common.stylesURL[styleList.value]] = cfg;
-                                } else if(widget.settings[Common.stylesURL[styleList.value]]["__version"] === cfg["__version"]) {
-                                    load(widget.settings[Common.stylesURL[styleList.value]]);
-                                } else {
-                                    widget.settings[Common.stylesURL[styleList.value]] = cfg;
-                                }
+                                load(widget.settings[widget.settings.current_style]);
                                 window.minimumHeight = cfg["__cfg_height"];
                             }
 
                             onContentItemChanged: {
                                 if(contentItem) {
-                                    contentItem.label = Common.styles[styleList.value];
+                                    let index = Common.stylesURL.indexOf(widget.settings.current_style);
+                                    if (index === -1)
+                                        index = 0;
+                                    contentItem.label = Common.styles[index];
                                 }
                             }
                         }
@@ -133,30 +118,14 @@ NVG.Window {
                         P.Separator {}
 
                         Component.onCompleted: {
-                            if(!widget.settings.styles) {
-                                configuration = rootPreference.save();
-                                let index = configuration["index"];
-                                widget.settings[Common.stylesURL[index]] = configuration[Common.stylesURL[index]];
-                                old_style_cfg = configuration[Common.stylesURL[index]];
-                                delete configuration[Common.stylesURL[index]];
-                                widget.settings.current_style = Common.stylesURL[index];
-                                widget.settings.styles = configuration;
+                            last_style_index = Common.stylesURL.indexOf(widget.settings.current_style);
+                            if (last_style_index === -1) {
+                                last_style_index = 0;
+                                widget.settings.current_style = Common.stylesURL[0];
                             }
-
-                            let index = Common.stylesURL.indexOf(widget.settings.current_style);
-                            if (index === -1) {
-                                index = 0;
-                                widget.settings.current_style = Common.stylesURL[index];
-                            }
-
-                            widget.settings.styles["index"] = index;
-                            widget.setStyleURL(Qt.resolvedUrl(Common.stylesURL[widget.settings.styles["index"]]));
-
-                            rootPreference.load(widget.settings.styles);
-                            configuration = widget.settings.styles;
-                            old_style_cfg = widget.settings[Common.stylesURL[index]];
-
-                            styleLoader.load(widget.settings[Common.stylesURL[index]]);
+                            rootPreference.load({"index": last_style_index});
+                            old_style_cfg = widget.settings[widget.settings.current_style];
+                            stylePreferenceLoader.load(widget.settings[widget.settings.current_style]);
                         }
                     }
                 }
@@ -165,10 +134,8 @@ NVG.Window {
     }
 
     onClosing: {
-        widget.setStyleURL("");
-        widget.settings[Common.stylesURL[widget.settings.styles["index"]]] = old_style_cfg;
-        widget.settings.styles = configuration;
-        widget.setStyleURL(Qt.resolvedUrl(Common.stylesURL[widget.settings.styles["index"]]));
+        widget.settings[widget.settings.current_style] = old_style_cfg;
+        widget.settings.current_style = Common.stylesURL[last_style_index]
         styleDialog.active = false;
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-    <value name="styles">{"index":3}</value>
-    <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset/circle#Style.qml"</value>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/circle#Style.qml">{"__version":"1.0.0","__cfg_height":740,"Main Color":"#ff4500","Line Position":0,"Line Width":1,"Max Range":50,"Data Length":0,"Channel":2,"Reverse":false,"Rotate":false,"Ratate Speed":10,"Angle":0,"Data Settings":{"Auto Normalizing":true,"Amplitude":10,"Unit Style":0}}</value>
+    <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset/circle"</value>
+    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/circle">{"Main Color":"#ff4500","Line Position":0,"Line Width":1,"Max Range":50,"Data Length":0,"Channel":2,"Reverse":false,"Rotate":false,"Ratate Speed":10,"Angle":0,"Data Settings":{"Auto Normalizing":true,"Amplitude":10,"Unit Style":0}}</value>
 </map>

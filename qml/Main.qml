@@ -15,27 +15,34 @@ T.Widget {
 
     editing: styleDialog.active
 
-    property bool initial: true
-
-    function setStyleURL(url) {
-        styleLoader.source = url;
-    }
+    property Component style
+    property Component preference
+    property var defaultValues
 
     Loader {
         id: styleDialog
         active: false
-        visible: false
         sourceComponent: StylePreferences {
             transientParent: widget.NVG.View.window
         }
+    }
+
+    Loader {
+        id: styleObjectLoader
+        active: widget.NVG.View.exposed
+        enabled: true
+        source: Qt.resolvedUrl(widget.settings.current_style)
 
         onLoaded: {
-            if(initial) {
-                styleDialog.active = false;
-                styleDialog.visible = true;
-                initial = false;
-            } else {
-                item.visible = true;
+            preference = item.preference;
+            defaultValues = item.defaultValues;
+            style = item.style;
+            if (!widget.settings[widget.settings.current_style]) {
+                widget.settings[widget.settings.current_style] = defaultValues;
+            }else if(widget.settings[widget.settings.current_style]["Version"] !== defaultValues["Version"]) {
+                delete widget.settings[widget.settings.current_style]["__cfg_height"];
+                delete widget.settings[widget.settings.current_style]["Version"];
+                widget.settings[widget.settings.current_style] = Object.assign(defaultValues, widget.settings[widget.settings.current_style]);
             }
         }
     }
@@ -44,7 +51,7 @@ T.Widget {
         id: styleLoader
         active: widget.NVG.View.exposed
         enabled: true
-        source: ""
+        sourceComponent: style
     }
 
     menu: Menu {
@@ -53,14 +60,16 @@ T.Widget {
             enabled: !styleDialog.active
             onTriggered: {
                 Common.updateStyleList();
-                styleDialog.active = true
+                styleDialog.active = true;
             }
         }
     }
 
     Component.onCompleted: {
-        styleDialog.active = true;
         Common.widgetsNum++;
+        if ((!widget.settings.current_style) || (Common.stylesURL.indexOf(widget.settings.current_style) === -1)) {
+            widget.settings.current_style = Common.stylesURL[0];
+        }
     }
 
     Component.onDestruction: {

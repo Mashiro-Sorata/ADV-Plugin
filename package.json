@@ -1,6 +1,6 @@
 {
     "name": "top.mashiros.widget.advp",
-    "version": "1.1.0",
+    "version": "1.2.0",
     
     "title": {
         "en": "ADV Plugin",
@@ -59,7 +59,7 @@
                 "zh_TW": "預置 線",
                 "ja": "プリセット 線"
             },
-            "entry": "./styles/Preset_line"
+            "entry": "./styles/Preset_line/Style.qml"
         },
         {
             "location": "/advp-style-preset/gradient_line",
@@ -70,7 +70,7 @@
                 "zh_TW": "預置 漸變線",
                 "ja": "プリセット グラデーションライン"
             },
-            "entry": "./styles/Preset_gradient_line"
+            "entry": "./styles/Preset_gradient_line/Style.qml"
         },
         {
             "location": "/advp-style-preset/waves",
@@ -81,7 +81,7 @@
                 "zh_TW": "預置 波浪",
                 "ja": "プリセット 波浪"
             },
-            "entry": "./styles/Preset_waves"
+            "entry": "./styles/Preset_waves/Style.qml"
         },
         {
             "location": "/advp-style-preset/circle",
@@ -92,7 +92,7 @@
                 "zh_TW": "預置 圓",
                 "ja": "プリセット 円"
             },
-            "entry": "./styles/Preset_circle"
+            "entry": "./styles/Preset_circle/Style.qml"
         },
         {
             "location": "/advp-style-preset/solidcircle",
@@ -103,7 +103,7 @@
                 "zh_TW": "預置 實心圓",
                 "ja": "プリセット 固形円"
             },
-            "entry": "./styles/Preset_solidcircle"
+            "entry": "./styles/Preset_solidcircle/Style.qml"
         },
         {
             "location": "/advp-style-preset/ordinal_scale_ui_bottom",
@@ -114,10 +114,10 @@
                 "zh_TW": "預置 序列之爭底部UI",
                 "ja": "プリセット オーディナル・スケール- UI 下部"
             },
-            "entry": "./styles/Preset_Ordinal_Scale_UI_bottom"
+            "entry": "./styles/Preset_Ordinal_Scale_UI_bottom/Style.qml"
         }, 
         {
-            "location": "/preset/advp-style-preset_line",
+            "location": "/preset/advp-style-preset/line",
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Line",
@@ -129,7 +129,7 @@
            "entry": "Presets/Line/preset.json"
         },
         {
-            "location": "/preset/advp-style-preset_gradient_line",
+            "location": "/preset/advp-style-preset/gradient_line",
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Gradient Line",
@@ -141,7 +141,7 @@
            "entry": "Presets/Gradient_Line/preset.json"
         },
         {
-            "location": "/preset/advp-style-preset_waves",
+            "location": "/preset/advp-style-preset/waves",
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Waves",
@@ -153,7 +153,7 @@
            "entry": "Presets/Waves/preset.json"
         },
         {
-            "location": "/preset/advp-style-preset_circle",
+            "location": "/preset/advp-style-preset/circle",
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Circle",
@@ -165,7 +165,7 @@
            "entry": "Presets/Circle/preset.json"
         },
         {
-            "location": "/preset/advp-style-preset_solidcircle",
+            "location": "/preset/advp-style-preset/solidcircle",
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Solid-circle",
@@ -177,7 +177,7 @@
            "entry": "Presets/Solidcircle/preset.json"
         },
         {
-            "location": "/preset/advp-style-preset_ordinal_scale_ui_bottom",
+            "location": "/preset/advp-style-preset/ordinal_scale_ui_bottom",
             "catalog": "preset/widget",
             "title": {
                 "en": "ADV Preset Ordinal Scale UI bottom",

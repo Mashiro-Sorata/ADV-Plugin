@@ -9,7 +9,7 @@ P.DialogPreference {
     property int cfg_height: 580
 
     P.TextFieldPreference {
-        name: "__version"
+        name: "Version"
         visible: false
         enabled: false
         defaultValue: version
@@ -39,5 +39,5 @@ P.DialogPreference {
         }
     }
 
-    P.Separator {}
+    P.Separator {visible: version}
 }

@@ -11,7 +11,7 @@ Canvas {
 
     signal audioDataUpdeted(var data)
     signal configsUpdated()
-    property var configs: widget.settings[Common.stylesURL[widget.settings.styles["index"]]]
+    readonly property var configs: widget.settings[widget.settings.current_style] ?? defaultValues
 
     onConfigsChanged: {
         if (context) {

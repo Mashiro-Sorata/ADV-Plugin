@@ -1,163 +1,333 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import NERvGear.Preferences 1.0 as P
 
 import "../../qml/api"
 
-StyleAPI {
-    readonly property var audioData: new Array(128)
+AdvpStyleTemplate {
+    style: AdvpCanvasTemplate {
+        readonly property var audioData: new Array(128)
 
-    readonly property bool centerLineFlag: configs["Center Line"]
-    readonly property string center_color: configs["Center Color"]
-    readonly property string line_color: configs["Line Color"]
-    readonly property int linePosition: configs["Line Position"]
-    readonly property int uDataLen: Math.pow(2, configs["Data Length"]);
-    readonly property int dataLength: 64/uDataLen
-    readonly property int channel: configs["Channel"]
-    readonly property bool reverse: configs["Reverse"]
-    readonly property bool centerRotateFlag: configs["Rotate Settings"]["Center Enable"]
-    readonly property real centerRotateAngle: configs["Rotate Settings"]["Center Angle"]
-    readonly property bool lineRotateFlag: configs["Rotate Settings"]["Line Enable"]
-    readonly property real lineRotateAngle: configs["Rotate Settings"]["Line Angle"]
-    readonly property bool autoNormalizing: configs["Data Settings"]["Auto Normalizing"]
-    readonly property real amplitude: configs["Data Settings"]["Amplitude"] / 400.0
-    readonly property int unitStyle: configs["Data Settings"]["Unit Style"]
+        readonly property bool centerLineFlag: configs["Center Line"]
+        readonly property string center_color: configs["Center Color"]
+        readonly property string line_color: configs["Line Color"]
+        readonly property int linePosition: configs["Line Position"]
+        readonly property int uDataLen: Math.pow(2, configs["Data Length"]);
+        readonly property int dataLength: 64/uDataLen
+        readonly property int channel: configs["Channel"]
+        readonly property bool reverse: configs["Reverse"]
+        readonly property bool centerRotateFlag: configs["Rotate Settings"]["Center Enable"]
+        readonly property real centerRotateAngle: configs["Rotate Settings"]["Center Angle"]
+        readonly property bool lineRotateFlag: configs["Rotate Settings"]["Line Enable"]
+        readonly property real lineRotateAngle: configs["Rotate Settings"]["Line Angle"]
+        readonly property bool autoNormalizing: configs["Data Settings"]["Auto Normalizing"]
+        readonly property real amplitude: configs["Data Settings"]["Amplitude"] / 400.0
+        readonly property int unitStyle: configs["Data Settings"]["Unit Style"]
 
-    property int total: channel * dataLength
-    property real logAmplitude: Math.log10(amplitude)
-    property real degUnit: Math.PI / 180
+        property int total: channel * dataLength
+        property real logAmplitude: Math.log10(amplitude)
+        property real degUnit: Math.PI / 180
 
-    property real halfWidth: width/2
-    property real halfHeight: height/2
+        property real halfWidth: width/2
+        property real halfHeight: height/2
 
-    onAudioDataUpdeted: {
-        if(autoNormalizing) {
-            if (unitStyle) {
-                //对数化显示
-                for(let i=0; i<dataLength; i++) {
-                    audioData[i] = 0;
-                    for(let j=0; j<uDataLen; j++) {
-                        audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64-i*uDataLen-j-1]/data[128])) + 1.0);
-                    }
-                    audioData[i] /= uDataLen;
-                }
-                if (channel === 2) {
-                    for(let i=dataLength; i<total; i++) {
+        onAudioDataUpdeted: {
+            if(autoNormalizing) {
+                if (unitStyle) {
+                    //对数化显示
+                    for(let i=0; i<dataLength; i++) {
                         audioData[i] = 0;
                         for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64+(i-dataLength)*uDataLen+j]/data[128])) + 1.0);
+                            audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64-i*uDataLen-j-1]/data[128])) + 1.0);
                         }
                         audioData[i] /= uDataLen;
                     }
-                }
-            } else {
-                //线性化显示
-                for(let i=0; i<dataLength; i++) {
-                    audioData[i] = 0;
-                    for(let j=0; j<uDataLen; j++) {
-                        audioData[i] += data[64-i*uDataLen-j-1];
+                    if (channel === 2) {
+                        for(let i=dataLength; i<total; i++) {
+                            audioData[i] = 0;
+                            for(let j=0; j<uDataLen; j++) {
+                                audioData[i] += Math.max(0, 0.4 * (Math.log10(data[64+(i-dataLength)*uDataLen+j]/data[128])) + 1.0);
+                            }
+                            audioData[i] /= uDataLen;
+                        }
                     }
-                    audioData[i] /= (uDataLen * data[128]);
-                }
-                if (channel === 2) {
-                    for(let i=dataLength; i<total; i++) {
+                } else {
+                    //线性化显示
+                    for(let i=0; i<dataLength; i++) {
                         audioData[i] = 0;
                         for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64+(i-dataLength)*uDataLen+j];
+                            audioData[i] += data[64-i*uDataLen-j-1];
                         }
                         audioData[i] /= (uDataLen * data[128]);
                     }
-                }
-            }
-        } else {
-            if (unitStyle) {
-                //对数化显示
-                for(let i=0; i<dataLength; i++) {
-                    audioData[i] = 0;
-                    for(let j=0; j<uDataLen; j++) {
-                        audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64-i*uDataLen-j-1])+logAmplitude) + 1.0);
-                    }
-                    audioData[i] /= uDataLen;
-                }
-                if (channel === 2) {
-                    for(let i=dataLength; i<total; i++) {
-                        audioData[i] = 0;
-                        for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64+(i-dataLength)*uDataLen+j])+logAmplitude) + 1.0);
+                    if (channel === 2) {
+                        for(let i=dataLength; i<total; i++) {
+                            audioData[i] = 0;
+                            for(let j=0; j<uDataLen; j++) {
+                                audioData[i] += data[64+(i-dataLength)*uDataLen+j];
+                            }
+                            audioData[i] /= (uDataLen * data[128]);
                         }
-                        audioData[i] /= uDataLen;
                     }
                 }
             } else {
-                //线性化显示
-                for(let i=0; i<dataLength; i++) {
-                    audioData[i] = 0;
-                    for(let j=0; j<uDataLen; j++) {
-                        audioData[i] += data[64-i*uDataLen-j-1];
-                    }
-                    audioData[i] /= (uDataLen/amplitude);
-                }
-                if (channel === 2) {
-                    for(let i=dataLength; i<total; i++) {
+                if (unitStyle) {
+                    //对数化显示
+                    for(let i=0; i<dataLength; i++) {
                         audioData[i] = 0;
                         for(let j=0; j<uDataLen; j++) {
-                            audioData[i] += data[64+(i-dataLength)*uDataLen+j];
+                            audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64-i*uDataLen-j-1])+logAmplitude) + 1.0);
+                        }
+                        audioData[i] /= uDataLen;
+                    }
+                    if (channel === 2) {
+                        for(let i=dataLength; i<total; i++) {
+                            audioData[i] = 0;
+                            for(let j=0; j<uDataLen; j++) {
+                                audioData[i] += Math.max(0, 0.35 * (Math.log10(data[64+(i-dataLength)*uDataLen+j])+logAmplitude) + 1.0);
+                            }
+                            audioData[i] /= uDataLen;
+                        }
+                    }
+                } else {
+                    //线性化显示
+                    for(let i=0; i<dataLength; i++) {
+                        audioData[i] = 0;
+                        for(let j=0; j<uDataLen; j++) {
+                            audioData[i] += data[64-i*uDataLen-j-1];
                         }
                         audioData[i] /= (uDataLen/amplitude);
                     }
+                    if (channel === 2) {
+                        for(let i=dataLength; i<total; i++) {
+                            audioData[i] = 0;
+                            for(let j=0; j<uDataLen; j++) {
+                                audioData[i] += data[64+(i-dataLength)*uDataLen+j];
+                            }
+                            audioData[i] /= (uDataLen/amplitude);
+                        }
+                    }
                 }
             }
-        }
-        let _dy;
-        let _y_dy = centerRotateFlag*Math.tan(centerRotateAngle*degUnit)*halfWidth;
-        let _ux = width/total;
-        let _dx = Math.round(_ux/2);
-        let _y = halfHeight-_y_dy
+            let _dy;
+            let _y_dy = centerRotateFlag*Math.tan(centerRotateAngle*degUnit)*halfWidth;
+            let _ux = width/total;
+            let _dx = Math.round(_ux/2);
+            let _y = halfHeight-_y_dy
 
-        context.clearRect(0, 0, width+32, height+32);
+            context.clearRect(0, 0, width+32, height+32);
 
-        if(lineRotateFlag || centerRotateFlag) {
-            context.transform(1, centerRotateFlag*centerRotateAngle * degUnit, -lineRotateFlag*lineRotateAngle * degUnit, 1, lineRotateFlag*Math.sin(1.05*lineRotateAngle*degUnit)*_y, 0);
-        }
-
-        if (centerLineFlag) {
-            context.fillStyle = center_color;
-            context.fillRect(0, _y, width, 2);
-        }
-
-
-
-        context.fillStyle = line_color;
-
-        //绘制频谱
-        if (channel === 1 && reverse) {
-            for (let i = 0; i < dataLength; i++) {
-                let index = dataLength - i - 1;
-                _y = halfHeight*(1-(linePosition!==2)*audioData[index])-_y_dy;
-                _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[index];
-                context.fillRect(_ux * i, _y, _dx, _dy);
+            if(lineRotateFlag || centerRotateFlag) {
+                context.transform(1, centerRotateFlag*centerRotateAngle * degUnit, -lineRotateFlag*lineRotateAngle * degUnit, 1, lineRotateFlag*Math.sin(1.05*lineRotateAngle*degUnit)*_y, 0);
             }
-        } else {
-            for (let j = 0; j < channel; j++) {
+
+            if (centerLineFlag) {
+                context.fillStyle = center_color;
+                context.fillRect(0, _y, width, 2);
+            }
+
+
+
+            context.fillStyle = line_color;
+
+            //绘制频谱
+            if (channel === 1 && reverse) {
                 for (let i = 0; i < dataLength; i++) {
-                    let index = j ? ((total - dataLength) + i) : i;
+                    let index = dataLength - i - 1;
                     _y = halfHeight*(1-(linePosition!==2)*audioData[index])-_y_dy;
                     _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[index];
-                    context.fillRect(_ux * (i + j * dataLength), _y, _dx, _dy);
+                    context.fillRect(_ux * i, _y, _dx, _dy);
                 }
+            } else {
+                for (let j = 0; j < channel; j++) {
+                    for (let i = 0; i < dataLength; i++) {
+                        let index = j ? ((total - dataLength) + i) : i;
+                        _y = halfHeight*(1-(linePosition!==2)*audioData[index])-_y_dy;
+                        _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[index];
+                        context.fillRect(_ux * (i + j * dataLength), _y, _dx, _dy);
+                    }
+                }
+            }
+
+            if (centerRotateFlag || lineRotateFlag)
+                context.resetTransform();
+
+            context.fill();
+
+            requestPaint();
+        }
+
+        Component.onCompleted: {
+            for (let i = 0; i < 128; i++) {
+                audioData[i] = 0;
+            }
+        }
+    }
+
+    defaultValues: {
+        "Version": "1.0.0",
+        "Center Line": true,
+        "Center Color": "#ff4500",
+        "Line Color": "#ff4500",
+        "Line Position": 0,
+        "Data Length": 0,
+        "Channel": 2,
+        "Reverse": false,
+        "Rotate Settings": {
+            "Center Enable": false,
+            "Center Angle": 10,
+            "Line Enable": false,
+            "Line Angle": 10
+        },
+        "Data Settings": {
+            "Auto Normalizing": true,
+            "Amplitude": 10,
+            "Unit Style": 0
+        }
+    }
+
+    preference: AdvpPreference {
+        version: defaultValues["Version"]
+        cfg_height: 580
+
+        P.SwitchPreference {
+            id: _cfg_preset_line_Center_Line
+            name: "Center Line"
+            label: qsTr("Show Center Line")
+            defaultValue: defaultValues["Center Line"]
+        }
+
+        P.ColorPreference {
+            name: "Center Color"
+            label: qsTr("Center Line Color")
+            enabled: _cfg_preset_line_Center_Line.value
+            defaultValue: defaultValues["Center Color"]
+        }
+
+        P.Separator {}
+
+        P.ColorPreference {
+            name: "Line Color"
+            label: qsTr("Spectrum Line Color")
+            defaultValue: defaultValues["Line Color"]
+        }
+
+        P.SelectPreference {
+            name: "Line Position"
+            label: qsTr("Spectrum Line Position")
+            defaultValue: defaultValues["Line Position"]
+            model: [qsTr("Both"), qsTr("Up"), qsTr("Down")]
+        }
+
+        P.SelectPreference {
+            name: "Data Length"
+            label: qsTr("Spectrum Length")
+            defaultValue: defaultValues["Data Length"]
+            model: [64, 32, 16, 8]
+        }
+
+        P.Separator {}
+
+        P.SpinPreference {
+            id: _cfg_preset_line_Channel
+            name: "Channel"
+            label: qsTr("Channel")
+            message: "1 to 2"
+            display: P.TextFieldPreference.ExpandLabel
+            editable: false
+            from: 1
+            to: 2
+            defaultValue: defaultValues["Channel"]
+        }
+
+        P.SwitchPreference {
+            name: "Reverse"
+            label: qsTr("Reverse Spectrum")
+            enabled: _cfg_preset_line_Channel.value === 1
+            defaultValue: defaultValues["Reverse"]
+        }
+
+        P.Separator {}
+
+        P.DialogPreference {
+            name: "Rotate Settings"
+            label: qsTr("Rotate Settings")
+            live: true
+            icon.name: "regular:\uf1de"
+
+            P.SwitchPreference {
+                id: _cfg_preset_line_Rotate_Center_Enable
+                name: "Center Enable"
+                label: qsTr("Rotate Center Line")
+                defaultValue: defaultValues["Rotate Settings"]["Center Enable"]
+            }
+
+            P.SliderPreference {
+                name: "Center Angle"
+                label: qsTr("Angle of Center Line")
+                enabled: _cfg_preset_line_Rotate_Center_Enable.value
+                from: -45
+                to: 45
+                stepSize: 1
+                defaultValue: defaultValues["Rotate Settings"]["Center Angle"]
+                displayValue: value + "°"
+            }
+
+            P.Separator {}
+
+            P.SwitchPreference {
+                id: _cfg_preset_line_Rotate_Line_Enable
+                name: "Line Enable"
+                label: qsTr("Rotate Spectrum Line")
+                defaultValue: defaultValues["Rotate Settings"]["Line Enable"]
+            }
+
+            P.SliderPreference {
+                name: "Line Angle"
+                label: qsTr("Angle of Spectrum Line")
+                enabled: _cfg_preset_line_Rotate_Line_Enable.value
+                from: -75
+                to: 75
+                stepSize: 1
+                defaultValue: defaultValues["Rotate Settings"]["Line Angle"]
+                displayValue: value + "°"
             }
         }
 
-        if (centerRotateFlag || lineRotateFlag)
-            context.resetTransform();
+        P.Separator {}
 
-        context.fill();
+        P.DialogPreference {
+            name: "Data Settings"
+            label: qsTr("Data Settings")
+            live: true
+            icon.name: "regular:\uf1de"
 
-        requestPaint();
-    }
+            P.SwitchPreference {
+                id: _cfg_preset_line_dataSettings_autoNormalizing
+                name: "Auto Normalizing"
+                label: qsTr("Auto Normalizing")
+                defaultValue: defaultValues["Data Settings"]["Auto Normalizing"]
+            }
 
-    Component.onCompleted: {
-        for (let i = 0; i < 128; i++) {
-            audioData[i] = 0;
+            P.SpinPreference {
+                name: "Amplitude"
+                label: qsTr("Amplitude Ratio")
+                enabled: !_cfg_preset_line_dataSettings_autoNormalizing.value
+                message: "1 to 100"
+                display: P.TextFieldPreference.ExpandLabel
+                editable: true
+                from: 1
+                to: 100
+                defaultValue: defaultValues["Data Settings"]["Amplitude"]
+            }
+
+            P.Separator {}
+
+            P.SelectPreference {
+                name: "Unit Style"
+                label: qsTr("Display Style")
+                defaultValue: defaultValues["Data Settings"]["Unit Style"]
+                model: [qsTr("Linear"), qsTr("Decibel")]
+            }
         }
     }
 }
