@@ -14,16 +14,9 @@ NVG.Window {
     title: qsTr("ADV-Plugin: Settings")
     visible: true
     minimumWidth: 480
-    minimumHeight: 580
+    minimumHeight: 600
     width: minimumWidth
     height: minimumHeight
-
-    Behavior on minimumHeight {
-        PropertyAnimation {
-            duration: 500
-            easing.type: Easing.InOutBack
-        }
-    }
 
     property var old_style_cfg
     property int last_style_index
@@ -34,7 +27,6 @@ NVG.Window {
 
         header: TitleBar {
             text: qsTr("Settings")
-
             standardButtons: Dialog.Save | Dialog.Reset
 
             onAccepted: {
@@ -72,8 +64,6 @@ NVG.Window {
                         id: rootPreference
                         Layout.fillWidth: true
 
-                        label: qsTr("Configuration")
-
                         onPreferenceEdited: {
                             if (widget.settings.current_style !== Common.stylesURL[styleList.value]) {
                                 widget.settings[widget.settings.current_style] = old_style_cfg;
@@ -92,8 +82,11 @@ NVG.Window {
                             defaultValue: 0
                             model: Common.styles
                         }
-
-                        P.Separator {}
+                        
+                        Heading {
+                            id: heading
+                            text: Common.styles[styleList.value] + " " + qsTr("Configuration")
+                        }
 
                         P.PreferenceLoader {
                             id: stylePreferenceLoader
@@ -102,20 +95,8 @@ NVG.Window {
                             onLoaded: {
                                 let cfg = save();
                                 load(widget.settings[widget.settings.current_style]);
-                                window.minimumHeight = cfg["__cfg_height"];
-                            }
-
-                            onContentItemChanged: {
-                                if(contentItem) {
-                                    let index = Common.stylesURL.indexOf(widget.settings.current_style);
-                                    if (index === -1)
-                                        index = 0;
-                                    contentItem.label = Common.styles[index];
-                                }
                             }
                         }
-
-                        P.Separator {}
 
                         Component.onCompleted: {
                             last_style_index = Common.stylesURL.indexOf(widget.settings.current_style);

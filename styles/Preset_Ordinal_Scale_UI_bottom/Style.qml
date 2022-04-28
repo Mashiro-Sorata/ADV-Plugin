@@ -135,7 +135,6 @@ AdvpStyleTemplate {
 
     preference: AdvpPreference {
         version: defaultValues["Version"]
-        cfg_height: 680
 
         P.ColorPreference {
             name: "Bass Color"

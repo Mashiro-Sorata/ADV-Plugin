@@ -1,6 +1,6 @@
 {
     "name": "top.mashiros.widget.advp",
-    "version": "1.2.0",
+    "version": "1.2.1",
     
     "title": {
         "en": "ADV Plugin",
@@ -54,10 +54,10 @@
             "location": "/advp-style-preset/line",
             "catalog": "top.mashiros.advp-style",
             "title": {
-                "en": "Preset Line",
-                "zh": "预置 线",
-                "zh_TW": "預置 線",
-                "ja": "プリセット 線"
+                "en": "Line",
+                "zh": "线",
+                "zh_TW": "線",
+                "ja": "線"
             },
             "entry": "./styles/Preset_line/Style.qml"
         },
@@ -65,10 +65,10 @@
             "location": "/advp-style-preset/gradient_line",
             "catalog": "top.mashiros.advp-style",
             "title": {
-                "en": "Preset Gradient Line",
-                "zh": "预置 渐变线",
-                "zh_TW": "預置 漸變線",
-                "ja": "プリセット グラデーションライン"
+                "en": "Gradient Line",
+                "zh": "渐变线",
+                "zh_TW": "漸變線",
+                "ja": "グラデーションライン"
             },
             "entry": "./styles/Preset_gradient_line/Style.qml"
         },
@@ -76,10 +76,10 @@
             "location": "/advp-style-preset/waves",
             "catalog": "top.mashiros.advp-style",
             "title": {
-                "en": "Preset Waves",
-                "zh": "预置 波浪",
-                "zh_TW": "預置 波浪",
-                "ja": "プリセット 波浪"
+                "en": "Waves",
+                "zh": "波浪",
+                "zh_TW": "波浪",
+                "ja": "波浪"
             },
             "entry": "./styles/Preset_waves/Style.qml"
         },
@@ -87,10 +87,10 @@
             "location": "/advp-style-preset/circle",
             "catalog": "top.mashiros.advp-style",
             "title": {
-                "en": "Preset Circle",
-                "zh": "预置 圆",
-                "zh_TW": "預置 圓",
-                "ja": "プリセット 円"
+                "en": "Circle",
+                "zh": "圆",
+                "zh_TW": "圓",
+                "ja": "円"
             },
             "entry": "./styles/Preset_circle/Style.qml"
         },
@@ -98,10 +98,10 @@
             "location": "/advp-style-preset/solidcircle",
             "catalog": "top.mashiros.advp-style",
             "title": {
-                "en": "Preset Solid-circle",
-                "zh": "预置 实心圆",
-                "zh_TW": "預置 實心圓",
-                "ja": "プリセット 固形円"
+                "en": "Solid-circle",
+                "zh": "实心圆",
+                "zh_TW": "實心圓",
+                "ja": "固形円"
             },
             "entry": "./styles/Preset_solidcircle/Style.qml"
         },
@@ -109,10 +109,10 @@
             "location": "/advp-style-preset/ordinal_scale_ui_bottom",
             "catalog": "top.mashiros.advp-style",
             "title": {
-                "en": "Preset Ordinal Scale UI bottom",
-                "zh": "预置 序列之争底部UI",
-                "zh_TW": "預置 序列之爭底部UI",
-                "ja": "プリセット オーディナル・スケール- UI 下部"
+                "en": "Ordinal Scale UI bottom",
+                "zh": "序列之争底部UI",
+                "zh_TW": "序列之爭底部UI",
+                "ja": "オーディナル・スケール- UI 下部"
             },
             "entry": "./styles/Preset_Ordinal_Scale_UI_bottom/Style.qml"
         }, 
@@ -120,10 +120,10 @@
             "location": "/preset/advp-style-preset/line",
             "catalog": "preset/widget",
             "title": {
-                "en": "ADV Preset Line",
-                "zh": "ADV预置 线",
-                "zh_TW": "ADV預置 線",
-                "ja": "ADVプリセット 線"
+                "en": "Audio Visualization: Line",
+                "zh": "音频可视化: 线",
+                "zh_TW": "音頻可視化: 線",
+                "ja": "音声視覚化: 線"
             },
            "preview": "Presets/Line/preview.png",
            "entry": "Presets/Line/preset.json"
@@ -132,10 +132,10 @@
             "location": "/preset/advp-style-preset/gradient_line",
             "catalog": "preset/widget",
             "title": {
-                "en": "ADV Preset Gradient Line",
-                "zh": "ADV预置 渐变线",
-                "zh_TW": "ADV預置 漸變線",
-                "ja": "ADVプリセット グラデーションライン"
+                "en": "Audio Visualization: Gradient Line",
+                "zh": "音频可视化: 渐变线",
+                "zh_TW": "音頻可視化: 漸變線",
+                "ja": "音声視覚化: グラデーションライン"
             },
            "preview": "Presets/Gradient_Line/preview.png",
            "entry": "Presets/Gradient_Line/preset.json"
@@ -144,10 +144,10 @@
             "location": "/preset/advp-style-preset/waves",
             "catalog": "preset/widget",
             "title": {
-                "en": "ADV Preset Waves",
-                "zh": "ADV预置 波浪",
-                "zh_TW": "ADV預置 波浪",
-                "ja": "ADVプリセット 波浪"
+                "en": "Audio Visualization: Waves",
+                "zh": "音频可视化: 波浪",
+                "zh_TW": "音頻可視化: 波浪",
+                "ja": "音声視覚化: 波浪"
             },
            "preview": "Presets/Waves/preview.png",
            "entry": "Presets/Waves/preset.json"
@@ -156,10 +156,10 @@
             "location": "/preset/advp-style-preset/circle",
             "catalog": "preset/widget",
             "title": {
-                "en": "ADV Preset Circle",
-                "zh": "ADV预置 圆",
-                "zh_TW": "ADV預置 圓",
-                "ja": "ADVプリセット 円"
+                "en": "Audio Visualization: Circle",
+                "zh": "音频可视化: 圆",
+                "zh_TW": "音頻可視化: 圓",
+                "ja": "音声視覚化: 円"
             },
            "preview": "Presets/Circle/preview.png",
            "entry": "Presets/Circle/preset.json"
@@ -168,10 +168,10 @@
             "location": "/preset/advp-style-preset/solidcircle",
             "catalog": "preset/widget",
             "title": {
-                "en": "ADV Preset Solid-circle",
-                "zh": "ADV预置 实心圆",
-                "zh_TW": "ADV預置 實心圓",
-                "ja": "ADVプリセット 固形円"
+                "en": "Audio Visualization: Solid-circle",
+                "zh": "音频可视化: 实心圆",
+                "zh_TW": "音頻可視化: 實心圓",
+                "ja": "音声視覚化: 固形円"
             },
            "preview": "Presets/Solidcircle/preview.png",
            "entry": "Presets/Solidcircle/preset.json"
@@ -180,10 +180,10 @@
             "location": "/preset/advp-style-preset/ordinal_scale_ui_bottom",
             "catalog": "preset/widget",
             "title": {
-                "en": "ADV Preset Ordinal Scale UI bottom",
-                "zh": "ADV预置 序列之争底部UI",
-                "zh_TW": "ADV預置 序列之爭底部UI",
-                "ja": "ADVプリセット オーディナル・スケール- UI 下部"
+                "en": "Audio Visualization: Ordinal Scale UI bottom",
+                "zh": "音频可视化: 序列之争底部UI",
+                "zh_TW": "音頻可視化: 序列之爭底部UI",
+                "ja": "音声視覚化: オーディナル・スケール- UI 下部"
             },
            "preview": "Presets/Ordinal_Scale_UI_bottom/preview.png",
            "entry": "Presets/Ordinal_Scale_UI_bottom/preset.json"

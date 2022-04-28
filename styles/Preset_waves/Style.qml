@@ -98,7 +98,6 @@ AdvpStyleTemplate {
 
     preference: AdvpPreference {
         version: defaultValues["Version"]
-        cfg_height: 500
 
         P.SliderPreference {
             name: "Line Width"

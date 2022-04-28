@@ -125,7 +125,6 @@ AdvpStyleTemplate {
 
     preference: AdvpPreference {
         version: defaultValues["Version"]
-        cfg_height: 740
 
         P.ColorPreference {
             name: "Main Color"
