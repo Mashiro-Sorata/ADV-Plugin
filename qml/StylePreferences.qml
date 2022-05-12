@@ -11,7 +11,7 @@ import "."
 
 NVG.Window {
     id: window
-    title: qsTr("ADV-Style: Settings")
+    title: qsTr("ADV Widget")
     visible: true
     minimumWidth: 480
     minimumHeight: 600
@@ -26,7 +26,7 @@ NVG.Window {
         anchors.fill: parent
 
         header: TitleBar {
-            text: qsTr("Style Settings")
+            text: qsTr("ADV Widget")
             standardButtons: Dialog.Save | Dialog.Reset
 
             onAccepted: {
@@ -46,7 +46,7 @@ NVG.Window {
             id: root
             anchors.fill: parent
             anchors.margins: 16
-            anchors.topMargin: 0
+            anchors.topMargin: 16
 
             Flickable {
                 Layout.fillWidth: true

@@ -10,7 +10,7 @@ import "."
 
 
 NVG.Window {
-    title: qsTr("ADV-Server: Settings")
+    title: qsTr("ADV Server")
     visible: true
     minimumWidth: 480
     minimumHeight: 600
@@ -22,7 +22,7 @@ NVG.Window {
         anchors.fill: parent
 
         header: TitleBar {
-            text: qsTr("Server Settings")
+            text: qsTr("ADV Server")
             standardButtons: Dialog.Save | Dialog.Reset
 
             onAccepted: {
@@ -56,7 +56,7 @@ NVG.Window {
             id: root
             anchors.fill: parent
             anchors.margins: 16
-            anchors.topMargin: 0
+            anchors.topMargin: 16
 
             Flickable {
                 Layout.fillWidth: true
