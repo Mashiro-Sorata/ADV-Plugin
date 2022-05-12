@@ -55,11 +55,17 @@ T.Widget {
 
     menu: Menu {
         Action {
-            text: qsTr("Settings") + "..."
-            enabled: !styleDialog.active
+            text: qsTr("Style Settings") + "..."
             onTriggered: {
                 Common.updateStyleList();
                 styleDialog.active = true;
+            }
+        }
+
+        Action {
+            text: qsTr("Server Settings") + "..."
+            onTriggered: {
+                Common.serverPreferencesOpen();
             }
         }
     }

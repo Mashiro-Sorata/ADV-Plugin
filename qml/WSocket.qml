@@ -4,15 +4,12 @@ import "."
 
 
 WebSocket {
-    property string wsIp: "localhost"
-    property int wsPort: 5050
-
-    url: "ws://" + wsIp + ":" + wsPort
+    url: "ws://" + Common.wsIp + ":" + Common.wsPort
     active: true
 
     onStatusChanged: {
         if(status === WebSocket.Closed || status === WebSocket.Error) {
-            Common.wsocketClosed();
+            Common.rebootFlag = true;
         }
     }
 

@@ -11,7 +11,7 @@ import "."
 
 NVG.Window {
     id: window
-    title: qsTr("ADV-Plugin: Settings")
+    title: qsTr("ADV-Style: Settings")
     visible: true
     minimumWidth: 480
     minimumHeight: 600
@@ -26,7 +26,7 @@ NVG.Window {
         anchors.fill: parent
 
         header: TitleBar {
-            text: qsTr("Settings")
+            text: qsTr("Style Settings")
             standardButtons: Dialog.Save | Dialog.Reset
 
             onAccepted: {
@@ -82,7 +82,7 @@ NVG.Window {
                             defaultValue: 0
                             model: Common.styles
                         }
-                        
+
                         Heading {
                             id: heading
                             text: Common.styles[styleList.value] + " " + qsTr("Configuration")

@@ -1,7 +1,7 @@
 {
     "name": "top.mashiros.widget.advp",
-    "version": "1.2.1",
-    
+    "version": "1.3.0",
+
     "title": {
         "en": "ADV Plugin",
         "zh": "音频可视化插件",
@@ -115,7 +115,7 @@
                 "ja": "オーディナル・スケール- UI 下部"
             },
             "entry": "./styles/Preset_Ordinal_Scale_UI_bottom/Style.qml"
-        }, 
+        },
         {
             "location": "/preset/advp-style-preset/line",
             "catalog": "preset/widget",
