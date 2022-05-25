@@ -123,6 +123,20 @@ Item {
         return objClone;
     }
 
+    //支持二级嵌套对象的更新操作
+    function updateObject(targetObj, sourceObj) {
+        for (let prop in sourceObj) {
+            if (sourceObj.hasOwnProperty(prop) && sourceObj[prop] !== undefined) {
+                if (typeof sourceObj[prop] === 'object') {
+                    Object.assign(targetObj[prop], sourceObj[prop]);
+                } else {
+                    targetObj[prop] = sourceObj[prop];
+                }
+            }
+        }
+        return targetObj;
+    }
+
     function isObjectValueEqual(a, b) {
         if (a === b)
             return true;
@@ -175,6 +189,9 @@ Item {
 
     onRebootFlagChanged: {
         rebootServer();
+        if (rebootFlag && debug) {
+            NVG.SystemCall.execute("explorer", NVG.Url.toLocalFile(Qt.resolvedUrl("../bin/ADV_Log.log")).replace(/\//g, '\\'));
+        }
     }
 
     function parse_resource(resource_list, sort) {
@@ -211,7 +228,7 @@ Item {
         if (ini_data) {
             ini_data = ini_data.toLowerCase();
             let cfg = parseINIString(ini_data);
-            serverCFG = Object.assign(defaultServerCFG, cfg);
+            serverCFG = Object.assign(deepClone(defaultServerCFG), cfg);
         } else {
             let ini_text = convertINIString(defaultServerCFG);
             writeFile(iniFile, ini_text);

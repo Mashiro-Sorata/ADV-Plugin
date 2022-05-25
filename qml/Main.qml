@@ -41,7 +41,7 @@ T.Widget {
                 widget.settings[widget.settings.current_style] = defaultValues;
             }else if(widget.settings[widget.settings.current_style]["Version"] !== defaultValues["Version"]) {
                 delete widget.settings[widget.settings.current_style]["Version"];
-                widget.settings[widget.settings.current_style] = Object.assign(defaultValues, widget.settings[widget.settings.current_style]);
+                widget.settings[widget.settings.current_style] = Common.updateObject(Common.deepClone(defaultValues), widget.settings[widget.settings.current_style]);
             }
         }
     }

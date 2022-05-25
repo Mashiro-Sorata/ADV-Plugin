@@ -141,21 +141,23 @@ NVG.Window {
 
                             P.SpinPreference {
                                 name: "attack"
-                                label: qsTr("Increase Speed")
+                                label: qsTr("Increase Factor")
+                                message: qsTr("The larger the value, the slower the data increase.")
                                 display: P.TextFieldPreference.ExpandLabel
                                 editable: true
                                 from: 1
-                                to: 200
+                                to: 20000
                                 defaultValue: Common.defaultServerCFG["fft"]["attack"]
                             }
 
                             P.SpinPreference {
                                 name: "decay"
-                                label: qsTr("Reduction Speed")
+                                label: qsTr("Reduction Factor")
+                                message: qsTr("The larger the value, the slower the data reduction.")
                                 display: P.TextFieldPreference.ExpandLabel
                                 editable: true
                                 from: 1
-                                to: 200
+                                to: 20000
                                 defaultValue: Common.defaultServerCFG["fft"]["decay"]
                             }
 
