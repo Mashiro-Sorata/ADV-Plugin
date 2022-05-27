@@ -85,6 +85,7 @@ NVG.Window {
 
                         Heading {
                             id: heading
+                            visible: Boolean(preference)
                             text: Common.styles[styleList.value] + " " + qsTr("Configuration")
                         }
 
