@@ -1,51 +1,45 @@
 <div align="center"><h1>ADV-Plugin</h1></div>
+<div align="center"><a href="https://nvg.dev/Mashiro_Sorata/ADV-Plugin">简体中文</a> | English</div>
 <div align="center"><img src="https://s3.bmp.ovh/imgs/2022/05/25/890c76939e00f9ab.png"></div>
 <div align="center">Powered By <a href="http://mashiros.top">Mashiro_Sorata</a></div>
 
 ---
 
-# 简介
+# Introduction
 
-`ADV-Plugin`是[SAO Utils 2](http://sao.gpbeta.com/)的第三方插件，可以提供系统音频数据的可视化服务。
-得益于SAO Utils 2允许用户使用qml脚本编写扩展插件，相对于[第一代](https://github.com/Mashiro-Sorata/AudioDVServer-Plugin)的插件方案，第二代可以整合第一代中客户端与服务器端的功能，无需复杂的配置即可使用。
+`ADV-Plugin` is a third-party plug-in for [SAO Utils 2](http://sao.gpbeta.com/) that provides visualization of system audio data.With the extension written in Qml language, the second generation ADV-Plugin can integrate the client and server functions in the first generation, and it is also easier to set custom styles.
 
-## 特色
-* 整合客户端与服务器端的功能，使用更简单
-* 预设6种频谱显示形式，其中每种都可以进一步自定义设置其样式
-* 提供了Style的开发接口，供开发者添加更多的可视化样式
-* 导入第三方Style类似其他插件，预计支持steam创意工坊下载
-* 服务端崩溃后自启动
+## Style Settings
 
-## 样式设置
+When the plugin is installed and enabled, the first preset style is loaded by default. Right-click on the widget to open the menu, and click on "Style Settings..." option to open the style settings window. The style options can switch between different styles, and if the style offers configurable options, a configuration item will appear below the style options.
 
-安装并启用插件后，默认加载第一种预设Style样式。右键点击挂件可调出菜单，在挂件菜单的挂件名选单中点击“样式设置...”选项，呼出样式设置窗口。点击其中的样式选项可切换不同的样式风格，若此样式提供可配置项，则在样式选项下方会出现配置项。
+<div align="center"><img src="https://s3.bmp.ovh/imgs/2022/05/27/d1f9370c7a04d88b.png" style="zoom:80%;" /></div>
 
-<div align="center"><img src="https://s3.bmp.ovh/imgs/2022/05/25/ad36cd0eccc8dd61.png" style="zoom:80%;" /></div>
+## Server Settings
 
-## 服务器设置
+Right-click on the widget and select "Server Settings..." in the menu item. You can set up and debug the server. Generally, you can use the default settings, but you can also further customize the parameters of the server to adjust the animation effect of all the audio visualization widgets. In addition, for all users whose audio visualization widgets are not displayed properly, debugging options are provided to better help locate errors.
 
-右键点击挂件后，在菜单项选择“服务器设置...”即可对服务器进行设置与调试。一般采用默认设置即可，也可进一步自定义服务端的参数，调节所有音频可视化挂件的动画效果。此外对于所有音频可视化挂件无法正常显示的用户，提供了调试接口以便更好的帮助定位错误。
-<div align="center"><img src="https://s3.bmp.ovh/imgs/2022/05/25/e00d784108a16948.png" style="zoom:80%;" /></div>
+<div align="center"><img src="https://s3.bmp.ovh/imgs/2022/05/27/1516e8a3a63d658f.png" style="zoom:80%;" /></div>
 
-其参数的具体说明如下。
+The options are specified below.
 
-* `调试模式`：因为插件有着错误自启功能，每次自启都会覆盖日志文件，打开调试模式后，会关闭错误自启功能，这时可打开日志文件定位具体错误。
+* `Debug Mode`: Because the plug-in has an error recovery function, each self-start will overwrite the log file. Therefore, you need to turn on debug mode to turn off the error self-start function, after which you can locate the specific error through the log file.
 
-* `常规`设置
-  * `端口号`：Websocket服务器的端口号。
-  * `最大客户端数量`：Websocket服务器的最大连接数，音频可视化挂件均共用同一个连接的数据。
-  * `启用日志`：启用后会在插件服务器目录下输出日志文件`ADV_Log.log`以定位错误，进入`调试模式`时必须启用日志。
-* `数据`设置
-  * `增大系数`：可调节频谱数据增大时的速度，该值越大，数据增大时的速度越慢。
-  * `减小系数`：可调节频谱数据减小时的速度，该值越大，数据减小时的速度越慢。
-  * `峰值额外增量`：数据归一化峰值的额外增量，调节频谱的动态范围。
-  * `动态归一化系数`：数据归一化峰值的收敛速度，该值越大，归一化的峰值数据收敛速度越快。
-  * `传输速率`：数据每秒发送的次数，可理解为挂件刷新率。
-  * `变化速度`：按照`变化速度/传输速率`的比例调节频谱数据变化速度，一般该值小于`传输速率`。
+* `General`
+  * `Port`: The port of the Websocket server.
+  * `Max Number of Clients`: Maximum number of connections to the Websocket server, audio visualization widgets all share data from the same connection.
+  * `Enable Logging`: When enabled, the log file `ADV_Log.log` will be output in the plugin server directory to locate errors. Logging must be enabled when entering `debug mode`.
+* `Data`
+  * `Increase Factor`: affects the speed when the spectrum data increases, the higher the value, the slower the speed when the data increases.
+  * `Reduction Factor`: affects the speed when the spectrum data decreases, the higher the value, the slower the speed when the data decreases.
+  * `Peak Extra Increment`: Additional increment of the data normalization peak, which regulates the dynamic range of the spectrum.
+  * `Dynamic Normalization Factor`: The convergence speed of the normalized peak data. The larger the value, the faster the convergence speed of the normalized peak data.
+  * `Transmission Rate`: The number of times the data is sent per second, which can be interpreted as the widget refresh rate.
+  * `Change Speed`: Adjusts the rate of spectrum data change in proportion to the `Change Speed/Transmission Rate`, which is generally less than the `Transmission Rate`.
 
-# 频谱样式开发
+# Style Development
 
-如果想开发新的频谱样式，可以参照[ADV-Plugin Wiki](https://nvg.dev/Mashiro_Sorata/ADV-Plugin/wiki)的说明及开发教程。
+If you want to develop a new spectrum style, you can refer to the [ADV-Plugin Wiki](https://github.com/Mashiro-Sorata/ADV-Plugin/wiki) for instructions and development tutorials.
 
-欢迎开发更多有趣好玩的频谱样式，与大家分享~
+Welcome to develop more interesting and fun spectrum styles and share them with everyone~
 
