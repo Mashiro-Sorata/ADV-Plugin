@@ -11,7 +11,19 @@ Canvas {
 
     signal audioDataUpdeted(var data)
     signal configsUpdated()
+    signal completed()
+    signal versionUpdated(string old)
+
     readonly property var configs: widget.settings[widget.settings.current_style] ?? defaultValues
+
+    function updateObject(target, source) {
+        return Common.updateObject(Common.deepClone(target), Common.deepClone(source));
+    }
+
+    onVersionUpdated: {
+        delete widget.settings[widget.settings.current_style]["Version"];
+        widget.settings[widget.settings.current_style] = updateObject(defaultValues, widget.settings[widget.settings.current_style]);
+    }
 
     onConfigsChanged: {
         if (context) {
@@ -29,5 +41,14 @@ Canvas {
         enabled: Boolean(context)
         target: Common
         onAudioDataUpdated: audioDataUpdeted(audioData)
+    }
+
+    Component.onCompleted: {
+        if (!widget.settings[widget.settings.current_style]) {
+            widget.settings[widget.settings.current_style] = defaultValues;
+        }else if(widget.settings[widget.settings.current_style]["Version"] !== defaultValues["Version"]) {
+            versionUpdated(widget.settings[widget.settings.current_style]["Version"]);
+        }
+        completed();
     }
 }

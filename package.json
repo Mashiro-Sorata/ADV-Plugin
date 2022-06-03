@@ -1,6 +1,6 @@
-{
+﻿{
     "name": "top.mashiros.widget.advp",
-    "version": "1.3.0",
+    "version": "1.4.0",
 
     "title": {
         "en": "ADV Plugin",
@@ -60,17 +60,6 @@
                 "ja": "線"
             },
             "entry": "./styles/Preset_line/Style.qml"
-        },
-        {
-            "location": "/advp-style-preset/gradient_line",
-            "catalog": "top.mashiros.advp-style",
-            "title": {
-                "en": "Gradient Line",
-                "zh": "渐变线",
-                "zh_TW": "漸變線",
-                "ja": "グラデーションライン"
-            },
-            "entry": "./styles/Preset_gradient_line/Style.qml"
         },
         {
             "location": "/advp-style-preset/waves",
@@ -187,6 +176,17 @@
             },
            "preview": "Presets/Ordinal_Scale_UI_bottom/preview.png",
            "entry": "Presets/Ordinal_Scale_UI_bottom/preset.json"
+        },
+        {
+            "location": "/advp-style-preset/gradient_line",
+            "catalog": "top.mashiros.advp-style-temp",
+            "title": {
+                "en": "Gradient Line",
+                "zh": "渐变线",
+                "zh_TW": "漸變線",
+                "ja": "グラデーションライン"
+            },
+            "entry": "./styles/Preset_line/Style.qml"
         }
     ]
 }

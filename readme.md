@@ -7,13 +7,13 @@
 
 # Introduction
 
-`ADV-Plugin` is a third-party plug-in for [SAO Utils 2](http://sao.gpbeta.com/) that provides visualization of system audio data.With the extension written in Qml language, the second generation ADV-Plugin can integrate the client and server functions in the first generation, and it is also easier to set custom styles.
+`ADV-Plugin` is a third-party plug-in for [SAO Utils 2](http://sao.gpbeta.com/) that provides visualization of system audio data. With the extension written in Qml language, the second generation ADV-Plugin can integrate the client and server functions in the first generation, and it is also easier to set custom styles.
 
 ## Style Settings
 
 When the plugin is installed and enabled, the first preset style is loaded by default. Right-click on the widget to open the menu, and click on "Style Settings..." option to open the style settings window. The style options can switch between different styles, and if the style offers configurable options, a configuration item will appear below the style options.
 
-<div align="center"><img src="https://s3.bmp.ovh/imgs/2022/05/27/d1f9370c7a04d88b.png" style="zoom:80%;" /></div>
+<div align="center"><img src="https://s3.bmp.ovh/imgs/2022/06/04/179108d647e11cd2.png" style="zoom:80%;" /></div>
 
 ## Server Settings
 

@@ -110,7 +110,7 @@ AdvpStyleTemplate {
             requestPaint();
         }
 
-        Component.onCompleted: {
+        onCompleted: {
             for (let i = 0; i < 128; i++) {
                 audioData[i] = 0;
             }

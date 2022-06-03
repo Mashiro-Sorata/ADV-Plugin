@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/line">{"Center Line":true,"Center Color":"#ff4500","Line Color":"#ff4500","Line Position":0,"Data Length":0,"Channel":2,"Rotate Settings":{"Center Enable":false,"Center Angle":10,"Line Enable":false,"Line Angle":10},"Data Settings":{"Auto Normalizing":true,"Amplitude":10,"Unit Style":0}}</value>
+    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/line">{"Enable Gradient":false,"Gradient Direction":0,"Start Position Color":"#f44336","Middle Position Color":"#4caf50","End Position Color":"#03a9f4","Center Line":true,"Center Color":"#ff4500","Center Width":20,"Line Color":"#ff4500","Line Position":0,"Data Length":0,"Channel":2,"Direction":0,"Rotate Settings":{"Center Enable":false,"Center Angle":10,"Line Enable":false,"Line Angle":10,"X Scale":100,"Y Scale":100,"X Offset":0,"Y Offset":0},"Data Settings":{"Auto Normalizing":true,"Amplitude":10,"Unit Style":0}}</value>
     <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset/line"</value>
 </map>

@@ -128,6 +128,8 @@ Item {
         for (let prop in sourceObj) {
             if (sourceObj.hasOwnProperty(prop) && sourceObj[prop] !== undefined) {
                 if (typeof sourceObj[prop] === 'object') {
+                    if (targetObj[prop] === undefined)
+                        targetObj[prop] = {};
                     Object.assign(targetObj[prop], sourceObj[prop]);
                 } else {
                     targetObj[prop] = sourceObj[prop];

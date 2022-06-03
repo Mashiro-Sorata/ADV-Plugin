@@ -37,12 +37,6 @@ T.Widget {
             preference = item.preference;
             defaultValues = item.defaultValues;
             style = item.style;
-            if (!widget.settings[widget.settings.current_style]) {
-                widget.settings[widget.settings.current_style] = defaultValues;
-            }else if(widget.settings[widget.settings.current_style]["Version"] !== defaultValues["Version"]) {
-                delete widget.settings[widget.settings.current_style]["Version"];
-                widget.settings[widget.settings.current_style] = Common.updateObject(Common.deepClone(defaultValues), widget.settings[widget.settings.current_style]);
-            }
         }
     }
 
@@ -72,7 +66,7 @@ T.Widget {
 
     Component.onCompleted: {
         Common.widgetsNum++;
-        if ((!widget.settings.current_style) || (Common.stylesURL.indexOf(widget.settings.current_style) === -1)) {
+        if (!widget.settings.current_style) {
             widget.settings.current_style = Common.stylesURL[0];
         }
     }
