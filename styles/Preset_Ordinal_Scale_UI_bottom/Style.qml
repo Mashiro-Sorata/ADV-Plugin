@@ -115,6 +115,10 @@ AdvpStyleTemplate {
                 audioData[i] = 0;
             }
         }
+
+        onVersionUpdated: {
+            updateConfiguration();
+        }
     }
 
     defaultValues: {

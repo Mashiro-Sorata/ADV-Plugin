@@ -1,42 +1,56 @@
 import QtQuick 2.12
 import QtGraphicalEffects 1.12
+import QtQuick.Shapes 1.12
 import NERvGear.Preferences 1.0 as P
 
 import "../../qml/api"
 
 AdvpStyleTemplate {
-    style: Rectangle {
-        id: main
-        width: widget.width;
-        height: widget.height;
+    style: Shape {
+        id: shape
+        width: widget.width
+        height: widget.height
 
         property int gradientStyle
+        property string main_color: "transparent"
+
+        LinearGradient {
+            id: pureGradient
+            GradientStop { color: main_color}
+        }
 
         RadialGradient {
             id: radialGradient
-            anchors.fill: parent
-            visible: gradientStyle===1
-            horizontalRadius: Math.min(width, height)/2
-            verticalRadius: horizontalRadius
-            gradient: Gradient {
-                GradientStop {id: radialGradient_pstart}
-                GradientStop {id: radialGradient_pmiddle}
-                GradientStop {id: radialGradient_pend}
-            }
+            centerX: widget.width/2
+            centerY: widget.height/2
+            focalX: centerX
+            focalY: centerY
+            centerRadius: Math.min(width, height)/2
+            GradientStop {id: radialGradient_pstart; color: "transparent"}
+            GradientStop {id: radialGradient_pmiddle; color: "transparent"}
+            GradientStop {id: radialGradient_pend; color: "transparent"}
         }
 
         ConicalGradient {
             id: conicalGradient
-            anchors.fill: parent
-            visible: gradientStyle===2
-            angle: -90;
-            gradient: Gradient {
-                GradientStop{id: conicalGradient_pstart; position: 0.0}
-                GradientStop{id: conicalGradient_pquarter; position: 0.25}
-                GradientStop {id: conicalGradient_phalf; position: 0.5}
-                GradientStop {id: conicalGradient_p3quarter; position: 0.75}
-                GradientStop{id: conicalGradient_pend; position: 1.0}
-            }
+            angle: -90
+            centerX: widget.width/2
+            centerY: widget.height/2
+            GradientStop{id: conicalGradient_pstart; position: 0.0; color: "transparent"}
+            GradientStop{id: conicalGradient_pquarter; position: 0.25; color: "transparent"}
+            GradientStop {id: conicalGradient_phalf; position: 0.5; color: "transparent"}
+            GradientStop {id: conicalGradient_p3quarter; position: 0.75; color: "transparent"}
+            GradientStop{id: conicalGradient_pend; position: 1.0; color: "transparent"}
+        }
+
+        ShapePath {
+            id: main
+            fillGradient: [pureGradient, radialGradient, conicalGradient][gradientStyle]
+            startX: -1
+            startY: -1
+            PathLine { x: widget.width+1; y: -1 }
+            PathLine { x: widget.width+1; y: widget.height+1 }
+            PathLine { x: -1; y: widget.height+1 }
         }
 
         layer.enabled: true
@@ -57,6 +71,7 @@ AdvpStyleTemplate {
                 readonly property bool autoNormalizing: configs["Data Settings"]["Auto Normalizing"]
                 readonly property real amplitude: 400/configs["Data Settings"]["Amplitude"]
                 readonly property int unitStyle: configs["Data Settings"]["Unit Style"]
+                readonly property int rotationDirection: configs["Rotation Direction"]
 
                 readonly property int total: channel*dataLength
 
@@ -79,7 +94,7 @@ AdvpStyleTemplate {
                 onConfigsUpdated: {
                     gradientStyle = configs["Gradient Style"];
                     context.lineWidth = configs["Line Width"];
-                    main.color = configs["Main Color"];
+                    main_color = configs["Main Color"];
                     if (gradientStyle === 1) {
                         radialGradient_pstart.color = configs["Radial Gradient Settings"]["Inside Position Color"];
                         radialGradient_pstart.position = configs["Radial Gradient Settings"]["Inside Position"]/100;
@@ -104,7 +119,7 @@ AdvpStyleTemplate {
 
                     for (let j=0; j < channel; j++) {
                         for (let i=0; i < dataLength; i++) {
-                            deg = degUnit*((i+j*dataLength)*dotGap+offsetAngle);
+                            deg = degUnit*((i+j*dataLength)*dotGap+offsetAngle*(1-2*rotationDirection));
                             deltaR = audioData[reverse*(dataLength-i-1)+(!reverse)*(i+j*dataLength)] * ratio;
                             r1 = _rhmLen+1+deltaR*(linePosition!==2);
                             r2 = _rhmLen-1-deltaR*(linePosition!==1);
@@ -112,7 +127,7 @@ AdvpStyleTemplate {
                             innerPos.push([halfWidth+Math.cos(deg)*r2,halfHeight+Math.sin(deg)*r2]);
                         }
                     }
-                    conicalGradient.rotation = offsetAngle;
+                    conicalGradient.angle = offsetAngle*(2*rotationDirection-1);
                     offsetAngle = rotateFlag ? ((offsetAngle + rSpeed) % 360) : angle;
                 }
 
@@ -155,12 +170,16 @@ AdvpStyleTemplate {
                         audioData[i] = 0;
                     }
                 }
+
+                onVersionUpdated: {
+                    updateConfiguration();
+                }
             }
         }
     }
 
     defaultValues: {
-        "Version": "1.2.0",
+        "Version": "1.2.2",
         "Gradient Style": 0,
         "Radial Gradient Settings": {
             "Inside Position Color": "#f44336",
@@ -184,6 +203,7 @@ AdvpStyleTemplate {
         "Channel": 2,
         "Reverse": false,
         "Rotate": false,
+        "Rotation Direction": 0,
         "Ratate Speed": 10,
         "Angle": 0,
         "Data Settings": {
@@ -360,6 +380,13 @@ AdvpStyleTemplate {
             name: "Rotate"
             label: qsTr("Auto Rotate")
             defaultValue: defaultValues["Rotate"]
+        }
+
+        P.SelectPreference {
+            name: "Rotation Direction"
+            label: qsTr("Rotation Direction")
+            defaultValue: defaultValues["Rotation Direction"]
+            model: [qsTr("Clockwise"), qsTr("Counterclockwise")]
         }
 
         P.SliderPreference {

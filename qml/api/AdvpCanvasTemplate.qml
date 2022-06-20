@@ -20,7 +20,7 @@ Canvas {
         return Common.updateObject(Common.deepClone(target), Common.deepClone(source));
     }
 
-    onVersionUpdated: {
+    function updateConfiguration() {
         delete widget.settings[widget.settings.current_style]["Version"];
         widget.settings[widget.settings.current_style] = updateObject(defaultValues, widget.settings[widget.settings.current_style]);
     }

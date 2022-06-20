@@ -179,8 +179,10 @@ Item {
         if (force || !debug && wsocket.active && rebootFlag) {
             console.log("Try to reboot ADVServer...");
             execute(serverEXE, "-reboot");
-            wsocket.active = false;
-            wsocket.active = true;
+            if (widgetsNum) {
+                wsocket.active = false;
+                wsocket.active = true;
+            }
             rebootFlag = false;
         }
     }
