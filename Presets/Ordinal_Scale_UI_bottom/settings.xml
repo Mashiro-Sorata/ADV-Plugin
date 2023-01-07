@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
     <value name="current_style">"nvg://advp.widget.mashiros.top/advp-style-preset/ordinal_scale_ui_bottom"</value>
-    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/ordinal_scale_ui_bottom">{"Bass Color":"#dc143c","Alto Color":"#f8f8ff","Treble Color":"#4169e1","Bass AM":100,"Alto AM":150,"Treble AM":200,"Static AM":25,"Speed":20,"Data Settings":{"Auto Normalizing":true,"Amplitude":10}}</value>
+    <value name="nvg://advp.widget.mashiros.top/advp-style-preset/ordinal_scale_ui_bottom">{"Refresh Rate":30,"Bass Color":"#dc143c","Alto Color":"#f8f8ff","Treble Color":"#4169e1","Bass AM":100,"Alto AM":150,"Treble AM":200,"Static AM":25,"Speed":20,"Data Settings":{"Auto Normalizing":true,"Amplitude":10}}</value>
 </map>

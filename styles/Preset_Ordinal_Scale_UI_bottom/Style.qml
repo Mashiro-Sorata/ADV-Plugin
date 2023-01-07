@@ -8,6 +8,7 @@ AdvpStyleTemplate {
         readonly property var audioData: new Array(128)
 
         //configs
+        readonly property real timer_interval: 1000/configs["Refresh Rate"]
         readonly property real bassAmRatio: configs["Bass AM"]/100
         readonly property real altoAmRatio: configs["Alto AM"]/100
         readonly property real trebleAmRatio: configs["Treble AM"]/100
@@ -20,7 +21,7 @@ AdvpStyleTemplate {
         readonly property real halfWidth: width/2
         readonly property real rHeight: 0.6*height
 
-        readonly property real speed: configs["Speed"]/100
+        readonly property real speed: 0.3*configs["Speed"]/configs["Refresh Rate"]
         readonly property real _MAX: (height/2)-4
         readonly property real _noise: configs["Static AM"]/100*_MAX
         readonly property real _delta: _MAX-_noise
@@ -80,40 +81,51 @@ AdvpStyleTemplate {
                     audioData[i] = data[i] * amplitude;
                 }
             }
-            let trebleAm = 0;
-            let altoAm = 0;
-            let bassAm = 0;
+            
+        }
 
-            for(let i=0; i<6.4; i++) {
-                bassAm += audioData[i];
+        Timer {
+            id: animation
+            interval: timer_interval
+            repeat: true
+            triggeredOnStart: false
+            onTriggered: {
+                let trebleAm = 0;
+                let altoAm = 0;
+                let bassAm = 0;
+
+                for(let i=0; i<6.4; i++) {
+                    bassAm += audioData[i];
+                }
+                for(let i=7; i<19.2; i++) {
+                    altoAm += audioData[i];
+                }
+                for(let i=20; i<64; i++) {
+                    trebleAm += audioData[i];
+                }
+
+                trebleAm = trebleAm / 38.4;
+                altoAm = altoAm / 19.2;
+                bassAm = bassAm / 6.4;
+
+                _phase = (_phase+speed)%(Math.PI*64);
+
+                context.clearRect(0, 0, width+32, height+32);
+
+                drawLine(_delta*trebleAmRatio*trebleAm, trebleColor, 1.5, _phase, false);
+                drawLine(_delta*bassAmRatio*bassAm, bassColor, 1.5, _phase+0.8, false);
+                drawLine(_delta*altoAmRatio*altoAm, altoColor, 2, _phase+0.4, true);
+                context.beginPath();
+                context.stroke();
+                requestPaint();
             }
-            for(let i=7; i<19.2; i++) {
-                altoAm += audioData[i];
-            }
-            for(let i=20; i<64; i++) {
-                trebleAm += audioData[i];
-            }
-
-            trebleAm = trebleAm / 38.4;
-            altoAm = altoAm / 19.2;
-            bassAm = bassAm / 6.4;
-
-            _phase = (_phase+speed)%(Math.PI*64);
-
-            context.clearRect(0, 0, width+32, height+32);
-
-            drawLine(_delta*trebleAmRatio*trebleAm, trebleColor, 1.5, _phase, false);
-            drawLine(_delta*bassAmRatio*bassAm, bassColor, 1.5, _phase+0.8, false);
-            drawLine(_delta*altoAmRatio*altoAm, altoColor, 2, _phase+0.4, true);
-            context.beginPath();
-            context.stroke();
-            requestPaint();
         }
 
         onCompleted: {
             for (let i = 0; i < 128; i++) {
                 audioData[i] = 0;
             }
+            animation.start();
         }
 
         onVersionUpdated: {
@@ -122,7 +134,8 @@ AdvpStyleTemplate {
     }
 
     defaultValues: {
-        "Version": "1.0.0",
+        "Version": "1.0.1",
+        "Refresh Rate": 30,
         "Bass Color": "#dc143c",
         "Alto Color": "#f8f8ff",
         "Treble Color": "#4169e1",
@@ -139,6 +152,16 @@ AdvpStyleTemplate {
 
     preference: AdvpPreference {
         version: defaultValues["Version"]
+
+        P.SliderPreference {
+            name: "Refresh Rate"
+            label: qsTr("Refresh Rate")
+            from: 20
+            to: 60
+            stepSize: 1
+            defaultValue: defaultValues["Refresh Rate"]
+            displayValue: value + " fps"
+        }
 
         P.ColorPreference {
             name: "Bass Color"

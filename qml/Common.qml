@@ -22,6 +22,9 @@ Item {
             "peakthr": 10,
             "fps": 35,
             "changespeed": 20
+        },
+        "advanced": {
+            "device_reboot": false
         }
     }
     readonly property string iniFile: "../bin/advConfig.ini"
@@ -198,8 +201,8 @@ Item {
         }
     }
 
-    function parse_resource(resource_list, sort) {
-        if (sort)
+    function parse_resource(resource_list, preset) {
+        if (preset)
             resource_list.sort(function (x, y) {
                 let preset_order = ["/advp-style-preset/line", "/advp-style-preset/gradient_line", "/advp-style-preset/waves", "/advp-style-preset/circle", "/advp-style-preset/solidcircle", "/advp-style-preset/ordinal_scale_ui_bottom"];
                 if (preset_order.indexOf(x.location) < preset_order.indexOf(y.location))

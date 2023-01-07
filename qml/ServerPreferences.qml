@@ -207,6 +207,20 @@ NVG.Window {
                             }
                         }
 
+                        P.PreferenceGroup {
+                            Layout.fillWidth: true
+                            name: "advanced"
+                            Heading { text: qsTr("Advanced") }
+
+                            P.SwitchPreference {
+                                name: "device_reboot"
+                                label: qsTr("Reboot on Device Changed")
+                                message: qsTr("Problems caused by switching devices may be resolved.")
+                                warning: value ? qsTr("The recovery time of the animation when switching devices may increase!") : ""
+                                defaultValue: Common.defaultServerCFG["advanced"]["device_reboot"]
+                            }
+                        }
+
                         Component.onCompleted: {
                             rootPreference.load(Common.serverCFG)
                         }
