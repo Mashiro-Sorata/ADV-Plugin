@@ -34,6 +34,12 @@ Canvas {
     onContextChanged: {
         if (context) {
             configsUpdated();
+            let _data = new Array(129);
+            for (let i = 0; i < 128; i++) {
+                _data[i] = 0;
+            }
+            _data[128] = 1;
+            audioDataUpdeted(_data);
         }
     }
 
