@@ -90,6 +90,9 @@ AdvpStyleTemplate {
                 readonly property real halfHeight: height/2
                 readonly property real halfMinLength: minLength/2
 
+                readonly property int linecap: configs["Line Cap"]
+                readonly property bool mirror: configs["Mirror"]
+
 
                 onConfigsUpdated: {
                     gradientStyle = configs["Gradient Style"];
@@ -117,16 +120,32 @@ AdvpStyleTemplate {
                     let deg, deltaR, r1, r2, _rhmLen;
                     _rhmLen = mainRatio*halfMinLength;
 
-                    for (let j=0; j < channel; j++) {
-                        for (let i=0; i < dataLength; i++) {
-                            deg = degUnit*((i+j*dataLength)*dotGap+offsetAngle*(1-2*rotationDirection));
-                            deltaR = audioData[reverse*(dataLength-i-1)+(!reverse)*(i+j*dataLength)] * ratio;
-                            r1 = _rhmLen+1+deltaR*(linePosition!==2);
-                            r2 = _rhmLen-1-deltaR*(linePosition!==1);
-                            outerPos.push([halfWidth+Math.cos(deg)*r1,halfHeight+Math.sin(deg)*r1]);
-                            innerPos.push([halfWidth+Math.cos(deg)*r2,halfHeight+Math.sin(deg)*r2]);
+                    if (mirror) {
+                        for (let j=0; j < channel; j++) {
+                            for (let i=0; i < dataLength; i++) {
+                                deg = degUnit*((i+j*dataLength)*dotGap+offsetAngle*(1-2*rotationDirection));
+                                deltaR = audioData[reverse*(dataLength+((2*i+1)*j-i-1))+(!reverse)*((2*dataLength-2*i-1)*j+i)] * ratio;
+                                // deltaR = audioData[reverse*(dataLength-(i+1)*(j===0)+i*(j===1))+(!reverse)*(i*(j===0)+(dataLength*2-i-1)*(j===1))] * ratio;
+                                r1 = _rhmLen+1+deltaR*(linePosition!==2);
+                                r2 = _rhmLen-1-deltaR*(linePosition!==1);
+                                outerPos.push([halfWidth+Math.cos(deg)*r1,halfHeight+Math.sin(deg)*r1]);
+                                innerPos.push([halfWidth+Math.cos(deg)*r2,halfHeight+Math.sin(deg)*r2]);
+                            }
+                        }
+                    } else {
+                        for (let j=0; j < channel; j++) {
+                            for (let i=0; i < dataLength; i++) {
+                                deg = degUnit*((i+j*dataLength)*dotGap+offsetAngle*(1-2*rotationDirection));
+                                deltaR = audioData[reverse*(dataLength*(j+1)-i-1)+(!reverse)*(i+j*dataLength)] * ratio;
+                                r1 = _rhmLen+1+deltaR*(linePosition!==2);
+                                r2 = _rhmLen-1-deltaR*(linePosition!==1);
+                                outerPos.push([halfWidth+Math.cos(deg)*r1,halfHeight+Math.sin(deg)*r1]);
+                                innerPos.push([halfWidth+Math.cos(deg)*r2,halfHeight+Math.sin(deg)*r2]);
+                            }
                         }
                     }
+
+                    
                     conicalGradient.angle = offsetAngle*(2*rotationDirection-1);
                     offsetAngle = rotateFlag ? ((offsetAngle + rSpeed) % 360) : angle;
                 }
@@ -152,7 +171,7 @@ AdvpStyleTemplate {
                             audioData[i] /= (uDataLen * normalizing_ratio);
                         }
                     }
-
+                    context.lineCap=["butt", "round", "square"][linecap];
                     context.clearRect(0, 0, width+32, height+32);
                     createPoint();
 
@@ -179,7 +198,7 @@ AdvpStyleTemplate {
     }
 
     defaultValues: {
-        "Version": "1.2.2",
+        "Version": "1.3.0",
         "Gradient Style": 0,
         "Radial Gradient Settings": {
             "Inside Position Color": "#f44336",
@@ -200,8 +219,10 @@ AdvpStyleTemplate {
         "Line Width": 1,
         "Max Range": 80,
         "Data Length": 0,
+        "Line Cap": 0,
         "Channel": 2,
         "Reverse": false,
+        "Mirror": false,
         "Rotate": false,
         "Rotation Direction": 0,
         "Ratate Speed": 10,
@@ -354,9 +375,17 @@ AdvpStyleTemplate {
             model: [64, 32, 16, 8]
         }
 
+        P.SelectPreference {
+            name: "Line Cap"
+            label: qsTr("Line Cap")
+            defaultValue: defaultValues["Line Cap"]
+            model: [qsTr("butt"), qsTr("round"), qsTr("square")]
+        }
+
         P.Separator {}
 
         P.SpinPreference {
+            id: _cfg_channel
             name: "Channel"
             label: qsTr("Channel")
             message: "1 to 2"
@@ -365,6 +394,13 @@ AdvpStyleTemplate {
             from: 1
             to: 2
             defaultValue: defaultValues["Channel"]
+        }
+
+        P.SwitchPreference {
+            name: "Mirror"
+            label: qsTr("Mirror Spectrum")
+            defaultValue: defaultValues["Mirror"]
+            visible: _cfg_channel.value > 1
         }
 
         P.SwitchPreference {

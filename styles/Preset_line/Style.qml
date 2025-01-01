@@ -56,6 +56,19 @@ AdvpStyleTemplate {
         property real radialGradient_xOffset
         property real radialGradient_yOffset
 
+        property bool centerRotateFlag
+        property bool lineRotateFlag
+        property real centerRotateAngleTangent
+        property real lineRotateAngleTangent
+        property real xOffset
+        property real yOffset
+        property real xScale
+        property real yScale
+
+        property real halfHeight
+        property real _dx
+        property real minv_ratio
+
         Canvas {
             id: centerLine
             anchors.fill: parent
@@ -67,18 +80,28 @@ AdvpStyleTemplate {
                 context.clearRect(0, 0, width+32, height+32);
                 context.fillStyle = center_color;
                 if (vertical_flag) {
-                    if (linePosition) {
+                    if(lineRotateFlag || centerRotateFlag) {
+                        context.transform(yScale, lineRotateAngleTangent, -centerRotateAngleTangent, xScale, 2*_y_dy+yOffset*height, xOffset*width-lineRotateAngleTangent*(halfHeight-_y_dy));
+                        context.fillRect(halfHeight-_y_dy-center_width/2, 0, center_width, height);
+                        context.resetTransform();
+                    }
+                    else if (linePosition) {
                         let _y = width/2 + width/2*(3-2*linePosition)*Boolean(linePosition);
                         context.fillRect(_y+(linePosition-2)*center_width, 0, center_width, height);
                     } else {
-                        context.fillRect(width/2-_y_dy-center_width/2, 0, center_width, width);
+                        context.fillRect(halfHeight-_y_dy-center_width/2, 0, center_width, height);
                     }
                 } else {
-                    if (linePosition) {
+                    if(lineRotateFlag || centerRotateFlag) {
+                        context.transform(xScale, centerRotateAngleTangent, -lineRotateAngleTangent, yScale, xOffset*width+lineRotateAngleTangent*(halfHeight-_y_dy), yOffset*height);
+                        context.fillRect(0, halfHeight-_y_dy-center_width/2, width, center_width);
+                        context.resetTransform();
+                    }
+                    else if (linePosition) {
                         let _y = height/2 + height/2*(3-2*linePosition)*Boolean(linePosition);
                         context.fillRect(0, _y+(linePosition-2)*center_width, width, center_width);
                     } else {
-                        context.fillRect(0, height/2-_y_dy-center_width/2, width, center_width);
+                        context.fillRect(0, halfHeight-_y_dy-center_width/2, width, center_width);
                     }
                 }
             }
@@ -93,33 +116,43 @@ AdvpStyleTemplate {
                 readonly property int uDataLen: Math.pow(2, configs["Data Length"]);
                 readonly property int dataLength: 64/uDataLen
                 readonly property int channel: configs["Channel"]
-                readonly property bool centerRotateFlag: configs["Rotate Settings"]["Center Enable"]
-                readonly property real centerRotateAngleTangent: centerRotateFlag*Math.tan(configs["Rotate Settings"]["Center Angle"]*Math.PI/180)
-                readonly property bool lineRotateFlag: configs["Rotate Settings"]["Line Enable"]
-                readonly property real lineRotateAngleTangent: lineRotateFlag*Math.tan(configs["Rotate Settings"]["Line Angle"]*Math.PI/180)
+                
                 readonly property bool autoNormalizing: configs["Data Settings"]["Auto Normalizing"]
                 readonly property real amplitude: 400.0/configs["Data Settings"]["Amplitude"]
                 readonly property int unitStyle: configs["Data Settings"]["Unit Style"]
 
-                readonly property real xOffset: configs["Rotate Settings"]["X Offset"]/100
-                readonly property real yOffset: configs["Rotate Settings"]["Y Offset"]/100
-                readonly property real xScale: configs["Rotate Settings"]["X Scale"]/100
-                readonly property real yScale: configs["Rotate Settings"]["Y Scale"]/100
-
                 readonly property real halfWidth: vertical_flag ? height/2 : width/2
-                readonly property real halfHeight: vertical_flag ? width/2 : height/2
 
                 readonly property int l_start: (channel===1)*dataLength
                 readonly property int r_stop: dataLength+dataLength*(channel!==0)
                 readonly property int total: r_stop-l_start
                 readonly property real _ux: halfWidth*2/(r_stop-l_start)
-                readonly property real _dx: Math.round(_ux/2)
+
+                readonly property int linecap: configs["Line Cap"]
+
+                function roundRect(context, x, y, w, h, r, lc) {
+                    context.beginPath();
+                    context.lineCap=lc;
+                    context.lineWidth=r;
+                    context.moveTo(x, y);
+                    context.lineTo(x+w, y+h);
+                    context.stroke();
+                    context.closePath();
+                }
+
+                on_UxChanged: {
+                    _dx = _ux/2;
+                }
 
                 onWidthChanged: {
                     if (gradientStyle === 1) {
                         linearGradient.x2 = width*(configs["Linear Gradient Settings"]["Gradient Direction"]!==1);
                         linearGradient.y2 = height*(configs["Linear Gradient Settings"]["Gradient Direction"]%2);
                     }
+
+                    halfHeight = vertical_flag ? width/2 : height/2;
+                    _dx = _ux/2;
+
                     centerLine.requestPaint();
                 }
 
@@ -130,6 +163,10 @@ AdvpStyleTemplate {
                         linearGradient.x2 = width*(configs["Linear Gradient Settings"]["Gradient Direction"]!==1);
                         linearGradient.y2 = height*(configs["Linear Gradient Settings"]["Gradient Direction"]%2);
                     }
+
+                    halfHeight = vertical_flag ? width/2 : height/2;
+                    _dx = _ux/2;
+
                     centerLine.requestPaint();
                 }
 
@@ -162,6 +199,21 @@ AdvpStyleTemplate {
                         radialGradient_xOffset = configs["Radial Gradient Settings"]["Center X Offset"];
                         radialGradient_yOffset = configs["Radial Gradient Settings"]["Center Y Offset"];
                     }
+
+                    centerRotateFlag = configs["Rotate Settings"]["Center Enable"];
+                    lineRotateFlag = configs["Rotate Settings"]["Line Enable"];
+                    centerRotateAngleTangent = centerRotateFlag*Math.tan(configs["Rotate Settings"]["Center Angle"]*Math.PI/180);
+                    lineRotateAngleTangent = lineRotateFlag*Math.tan(configs["Rotate Settings"]["Line Angle"]*Math.PI/180);
+                    xOffset = configs["Rotate Settings"]["X Offset"]/100;
+                    yOffset = configs["Rotate Settings"]["Y Offset"]/100;
+                    xScale = configs["Rotate Settings"]["X Scale"]/100;
+                    yScale = configs["Rotate Settings"]["Y Scale"]/100;
+
+                    minv_ratio = configs["Initial Point Size"]/100;
+                    
+                    halfHeight = vertical_flag ? width/2 : height/2;
+                    _dx = _ux/2;
+
                     centerLine.requestPaint();
                 }
 
@@ -205,14 +257,16 @@ AdvpStyleTemplate {
 
                     let _y;
                     let _dy;
+                    let lc = ["butt", "round", "square"][linecap];
                     if (vertical_flag) {
                         if(lineRotateFlag || centerRotateFlag) {
                             context.transform(yScale, lineRotateAngleTangent, -centerRotateAngleTangent, xScale, 2*_y_dy+yOffset*height, xOffset*width-lineRotateAngleTangent*(halfHeight-_y_dy));
-                            context.fillStyle = line_color;
+                            context.strokeStyle = line_color;
                             for (let i=l_start; i<r_stop; i++) {
                                 _y = halfHeight*(1-(linePosition!==2)*audioData[i])-_y_dy;
                                 _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[i];
-                                context.fillRect(_y, _ux * (i-l_start), _dy, _dx);
+                                roundRect(context, _y-_dx*minv_ratio/2, _dx+_ux * (i-l_start), _dx*minv_ratio, 0, _dx, lc);
+                                roundRect(context, _y+_dx*minv_ratio/2, _dx+_ux * (i-l_start), _dy, 0, _dx, lc);
                             }
                             if (centerLineFlag) {
                                 context.fillRect(halfHeight-_y_dy-center_width/2, 0, center_width, height);
@@ -221,20 +275,22 @@ AdvpStyleTemplate {
                         } else if (linePosition) {
                             let _flag = 1-2*(linePosition===1);
                             _y = halfHeight + halfHeight*(3-2*linePosition)*Boolean(linePosition);
-                            context.fillStyle = line_color;
+                            context.strokeStyle = line_color;
                             for (let i=l_start; i<r_stop; i++) {
                                 _dy = width*audioData[i]*_flag;
-                                context.fillRect(_y, _ux * (i-l_start), _dy, _dx);
+                                roundRect(context, _y-_dx*minv_ratio/2, _dx+_ux * (i-l_start), _dx*minv_ratio, 0, _dx, lc);
+                                roundRect(context, _y+_dx*minv_ratio/2, _dx+_ux * (i-l_start), _dy, 0, _dx, lc);
                             }
                             if (centerLineFlag) {
                                 context.fillRect(_y+(linePosition-2)*center_width, 0, center_width, height);
                             }
                         } else {
-                            context.fillStyle = line_color;
+                            context.strokeStyle = line_color;
                             for (let i=l_start; i<r_stop; i++) {
                                 _y = halfHeight*(1-(linePosition!==2)*audioData[i])-_y_dy;
                                 _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[i];
-                                context.fillRect(_y, _ux * (i-l_start), _dy, _dx);
+                                roundRect(context, _y-_dx*minv_ratio/2, _dx+_ux * (i-l_start), _dx*minv_ratio, 0, _dx, lc);
+                                roundRect(context, _y+_dx*minv_ratio/2, _dx+_ux * (i-l_start), _dy, 0, _dx, lc);
                             }
                             if (centerLineFlag) {
                                 context.fillRect(halfHeight-_y_dy-center_width/2, 0, center_width, height);
@@ -244,11 +300,12 @@ AdvpStyleTemplate {
                         //绘制频谱
                         if(lineRotateFlag || centerRotateFlag) {
                             context.transform(xScale, centerRotateAngleTangent, -lineRotateAngleTangent, yScale, xOffset*width+lineRotateAngleTangent*(halfHeight-_y_dy), yOffset*height);
-                            context.fillStyle = line_color;
+                            context.strokeStyle = line_color;
                             for (let i=l_start; i<r_stop; i++) {
                                 _y = halfHeight*(1-(linePosition!==2)*audioData[i])-_y_dy;
                                 _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[i];
-                                context.fillRect(_ux * (i-l_start), _y, _dx, _dy);
+                                roundRect(context, _dx+_ux * (i-l_start), _y-_dx*minv_ratio/2, 0, _dx*minv_ratio, _dx, lc);
+                                roundRect(context, _dx+_ux * (i-l_start), _y+_dx*minv_ratio/2, 0, _dy, _dx, lc);
                             }
                             if (centerLineFlag) {
                                 context.fillRect(0, halfHeight-_y_dy-center_width/2, width, center_width);
@@ -257,23 +314,26 @@ AdvpStyleTemplate {
                         } else if (linePosition) {
                             let _flag = 1-2*(linePosition===1);
                             _y = halfHeight + halfHeight*(3-2*linePosition)*Boolean(linePosition);
-                            context.fillStyle = line_color;
+                            context.strokeStyle = line_color;
                             for (let i=l_start; i<r_stop; i++) {
                                 _dy = height*audioData[i]*_flag;
-                                context.fillRect(_ux * (i-l_start), _y, _dx, _dy);
+                                roundRect(context, _dx+_ux * (i-l_start), _y-_dx*minv_ratio/2, 0, _dx*minv_ratio, _dx, lc);
+                                roundRect(context, _dx+_ux * (i-l_start), _y+_dx*minv_ratio/2, 0, _dy, _dx, lc);
                             }
                             if (centerLineFlag) {
                                 context.fillRect(0, _y+(linePosition-2)*center_width, width, center_width);
                             }
                         } else {
-                            context.fillStyle = line_color;
+                            context.strokeStyle = line_color;
                             for (let i=l_start; i<r_stop; i++) {
                                 _y = halfHeight*(1-(linePosition!==2)*audioData[i])-_y_dy;
                                 _dy = (halfHeight + (!linePosition)*halfHeight)*audioData[i];
-                                context.fillRect(_ux * (i-l_start), _y, _dx, _dy);
+                                roundRect(context, _dx+_ux * (i-l_start), _y-_dx*minv_ratio/2, 0, _dx*minv_ratio, _dx, lc);
+                                roundRect(context, _dx+_ux * (i-l_start), _y+_dx*minv_ratio/2, 0, _dy, _dx, lc);
                             }
                             if (centerLineFlag) {
                                 context.fillRect(0, halfHeight-_y_dy-center_width/2, width, center_width);
+
                             }
                         }
                     }
@@ -315,7 +375,7 @@ AdvpStyleTemplate {
     }
 
     defaultValues: {
-        "Version": "1.3.2",
+        "Version": "1.4.0",
         "Gradient Style": 0,
         "Linear Gradient Settings": {
             "Gradient Direction": 0,
@@ -341,6 +401,8 @@ AdvpStyleTemplate {
         "Data Length": 0,
         "Channel": 2,
         "Direction": 0,
+        "Line Cap": 0,
+        "Initial Point Size": 0,
         "Rotate Settings": {
             "Center Enable": false,
             "Center Angle": 10,
@@ -541,6 +603,23 @@ AdvpStyleTemplate {
             label: qsTr("Channel")
             defaultValue: defaultValues["Channel"]
             model: [qsTr("Left Channel"), qsTr("Right Channel"), qsTr("Stereo")]
+        }
+
+        P.SelectPreference {
+            name: "Line Cap"
+            label: qsTr("Line Cap")
+            defaultValue: defaultValues["Line Cap"]
+            model: [qsTr("butt"), qsTr("round"), qsTr("square")]
+        }
+
+        P.SliderPreference {
+            name: "Initial Point Size"
+            label: qsTr("Initial Point Size")
+            from: 0
+            to: 100
+            stepSize: 1
+            defaultValue: defaultValues["Initial Point Size"]
+            displayValue: value + "%"
         }
 
         P.Separator {}
